@@ -9,8 +9,8 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2, 100))
     starten_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2 + screen_placement_text, 250))
     quit_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2 + screen_placement_text, 600))
-    background = pygame.image.load("assets/background.png") #chatgpt für einzeigen von Hintergrund verwendet
-    screen.blit(background, (0, 0)) #chatgpt für einzeigen von Hintergrund verwendet
+    background = pygame.image.load("assets/background.png") #chatgpt für einzeigen von Hintergrund verwendet.
+    screen.blit(background, (0, 0)) #chatgpt für einzeigen von Hintergrund verwendet.
     running = True
 
     while running:
