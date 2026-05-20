@@ -23,6 +23,8 @@ class GameVariables:
         GameVariables.FONT_SMALL = pygame.sysfont.SysFont("arial", 14, bold=False)
 
 
+
+
 class GameScreens:
     MAIN = "main"
     PLAY = "play"
