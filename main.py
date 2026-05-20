@@ -2,7 +2,7 @@ import  pygame
 from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
-    titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "green")
+    titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
     starten_text = GameVariables.FONT_MIDDLE.render(">>Starten<<", True, "darkgreen")
     quit_text = GameVariables.FONT_MIDDLE.render(">>Exit<<", True, "darkred")
 
@@ -62,8 +62,8 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.MAIN
 
         screen.fill("black")
-
-
+        background = pygame.image.load("assets/map.png")
+        screen.blit(background, (0, 0))
         pygame.display.flip()
 
         clock.tick(GameVariables.FPS)
