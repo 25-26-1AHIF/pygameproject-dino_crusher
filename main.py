@@ -75,7 +75,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 def main():
     GameVariables.init()
 
-    pygame.display.set_caption("Hello pygame")
+    pygame.display.set_caption("Hello")
     screen = pygame.display.set_mode((GameVariables.SCREEN_WIDTH, GameVariables.SCREEN_HEIGHT))
 
     clock = pygame.time.Clock()
