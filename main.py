@@ -3,12 +3,12 @@ from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "green")
-    starten_text = GameVariables.FONT_MIDDLE.render("starten", True, "darkgreen")
-    quit_text = GameVariables.FONT_MIDDLE.render("Exit", True, "darkred")
-    screen_placement_text = ((GameVariables.SCREEN_WIDTH / 2) / 2) / 2
-    titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2, 100))
-    starten_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2 + screen_placement_text, 250))
-    quit_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH / 2 + screen_placement_text, 600))
+    starten_text = GameVariables.FONT_MIDDLE.render(">>Starten<<", True, "darkgreen")
+    quit_text = GameVariables.FONT_MIDDLE.render(">>Exit<<", True, "darkred")
+
+    titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    starten_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2 + GameVariables.SCREEN_WIDTH // 14, 250))
+    quit_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2 + GameVariables.SCREEN_WIDTH // 12, 600))
     background = pygame.image.load("assets/background.png") #chatgpt für einzeigen von Hintergrund verwendet.
     screen.blit(background, (0, 0)) #chatgpt für einzeigen von Hintergrund verwendet.
     running = True

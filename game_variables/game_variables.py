@@ -19,7 +19,7 @@ class GameVariables:
     def init():
         pygame.init()
         GameVariables.FONT_BIG = pygame.sysfont.SysFont("arial", 70, bold=True)
-        GameVariables.FONT_MIDDLE = pygame.sysfont.SysFont("arial", 40, bold=False)
+        GameVariables.FONT_MIDDLE = pygame.sysfont.SysFont("arial", 40, bold=True)
         GameVariables.FONT_SMALL = pygame.sysfont.SysFont("arial", 14, bold=False)
 
 
