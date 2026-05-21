@@ -3,6 +3,7 @@ from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 from game_variables.player import Player
 from game_variables.raptor_enemy import Raptor
+
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
     starten_text = GameVariables.FONT_MIDDLE.render(">>Starten<<", True, "darkgreen")
@@ -68,7 +69,8 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         background = pygame.image.load("assets/map.png")
         screen.blit(background, (0, 0))
         player.update_and_draw()
-        raptor.update(raptor_rect, raptor_rect)
+        player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
+        raptor.update(raptor_rect, player_rect)
         raptor.draw(screen, raptor_rect.x, raptor_rect.y)
         pygame.display.flip()
 
