@@ -17,7 +17,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     running = True
 
     while running:
-        shoot = False
+
 
         for event in pygame.event.get():
 
@@ -34,7 +34,6 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
 
 
-        #screen.fill("black")
 
         screen.blit(source=titel_text, dest=titel_text_rect)
         screen.blit(source=starten_text, dest=starten_text_rect)
@@ -53,7 +52,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     raptor_rect = pygame.Rect(500, GameVariables.SCREEN_HEIGHT - 1 - 120 - 128, 256, 128)
 
     running = True
-
+    background = pygame.image.load("assets/map.png")
     while running:
         shoot = False
 
@@ -66,7 +65,6 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.MAIN
 
         screen.fill("black")
-        background = pygame.image.load("assets/map.png")
         screen.blit(background, (0, 0))
         player.update_and_draw()
         player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
