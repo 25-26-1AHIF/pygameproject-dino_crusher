@@ -29,5 +29,6 @@ class GameScreens:
     MAIN = "main"
     PLAY = "play"
     EXIT = "exit"
+    SETTINGS = "Settings"
     actual_screen = MAIN
 
