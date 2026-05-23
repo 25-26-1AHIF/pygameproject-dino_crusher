@@ -10,7 +10,7 @@ from game_variables.sprites import Sprite
 from game_variables.weapons.glock import Glock
 
 class Player:
-    def __init__(self, screen):
+    def __init__(self, screen, pfad):
         self.screen = screen
         self.x_pos = GameVariables.SCREEN_WIDTH / 2 - GameVariables.SQUARE_SIZE // 2 - 1
         self.y_pos = GameVariables.SCREEN_HEIGHT - GameVariables.SQUARE_SIZE - 1 - 120
@@ -35,7 +35,8 @@ class Player:
         self.facing_left = False
         self.on_ground = True
 
-        self.glock = Glock()
+        self.glock = Glock(pfad=pfad)
+
 
     def get_rect(self):
         return pygame.Rect(self.x_pos, self.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
@@ -84,9 +85,11 @@ class Player:
         self.dy = self.dy / distance * speed
         missle = Missle(xpos=missle_x_pos, ypos=missle_y_pos, screen=self.screen, dx=self.dx, dy=self.dy)
 
+
         self.missles.add_rocket(missle)
 
-    def update_and_draw(self, dmg):
+
+    def update_and_draw(self, dmg, dmg_fly):
         player_get_rect = self.get_rect()
         rect_2 = pygame.Rect(319, 460, 100, 40)
         rect_3 = pygame.Rect(525, 369, 100, 10)
@@ -133,8 +136,16 @@ class Player:
 
         if dmg == True:
             self.hp -= self.dino_dmg
-            if self.hp == 0:
-                return GameScreens.DEAD
+        if dmg_fly == True:
+            self.hp -= self.dino_dmg
+
+        if self.x_pos < -10:
+            self.hp -= 1
+        if self.x_pos > 1090:
+            self.hp -= 1
+
+        if self.hp <= 0:
+            return GameScreens.DEAD
 
 
         pygame.draw.rect(surface=self.screen, rect=(50, 50, self.hp, 20), color="green", width=0)

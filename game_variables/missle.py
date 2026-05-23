@@ -1,5 +1,5 @@
 import pygame
-
+import time
 class Missle:
 
     def __init__(self, xpos, ypos, dx, dy, screen):
@@ -8,6 +8,7 @@ class Missle:
         self.dx = dx
         self.dy = dy
         self.screen = screen
+
 
 
 
@@ -20,6 +21,7 @@ class Missle:
         self.ypos += self.dy
 
         pygame.draw.rect(surface=self.screen, rect=(self.xpos, self.ypos, 10, 10), color="gold", width=0)
+
 
 
 class Missles:
@@ -37,4 +39,6 @@ class Missles:
             missle.update_and_draw()
 
             if missle.ypos <=  0 - 32:
+                self.missles.pop(len(self.missles) - idx - 1)
+            if missle.ypos >=  720 + 32:
                 self.missles.pop(len(self.missles) - idx - 1)

@@ -9,19 +9,19 @@ from game_variables.missle import Missle
 from game_variables.missle import Missles
 
 
-class Raptor:
+class Fly:
     def __init__(self, screen):
         self.run_anim = SpriteSheet("assets/raptor_run.png", 6, pygame.Rect(0, 0, 128, 64), 8)
         self.run_anim.load_spritesheet()
         self.bite_anim = SpriteSheet("assets/raptor_bite_transparent.png", 10, pygame.Rect(0, 0, 128, 64), 6)
         self.bite_anim.load_spritesheet()
         self.screen = screen
-        self.player = Player(screen, pfad=GameVariables.PLAYER_SKIN)
+        self.player = Player(screen, GameVariables.PLAYER_SKIN)
         self.is_biting_x = False
         self.is_biting_y = False
         self.frame_counter = 0
         self.facing_left = False
-        self.speed = 4
+        self.speed = 3
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
         self.did_damage = False
@@ -29,7 +29,8 @@ class Raptor:
         self.player_dmg = 5
         self.counter = 0
         self.hp_dino = self.hp_dino_ges
-        self.points_raptor = 0
+        self.points_fly = 0
+
 
     def get_rect(self, my_rect):        # chatgpt für !!bessere!! hitboxen verwendet
         hitbox_width = 220
@@ -46,7 +47,7 @@ class Raptor:
             )
 
 
-    def update(self, my_rect, player_rect):
+    def update(self, my_rect, player_rect):     # chatgpt für das offset verwendet damit dino über player schwebt
         # berechnugnen ki claude
         if my_rect.centerx < player_rect.centerx - 60:
             my_rect.x += self.speed
@@ -56,7 +57,17 @@ class Raptor:
             my_rect.x -= self.speed
             self.facing_left = True
             # berechnugnen ki claude
+        TARGET_OFFSET = 120
+
+        target_y = player_rect.centery - TARGET_OFFSET
+
+        if my_rect.centery > target_y:
+            my_rect.y -= self.speed
+        elif my_rect.centery < target_y:
+            my_rect.y += self.speed
+            # berechnugnen ki claude
         self.is_biting_x = my_rect.centerx - 60 <= player_rect.centerx <= my_rect.centerx + 60
+        self.is_biting_y = my_rect.centery - 40 <= player_rect.centery <= my_rect.centery + 40
         if player_rect.centery <= my_rect.centery:
             self.is_biting_y = True
         else:
@@ -66,20 +77,28 @@ class Raptor:
         x = random.randint(0, 10)
         if x <= 5:
             my_rect.centerx = random.randint(1100, 1200)
-        if x > 5:
+        else:
             my_rect.centerx = random.randint(-120, -20)
+        my_rect.centery = random.randint(0, 300)
+
         self.counter += 1
         if self.counter == 10:
             self.speed += 1
         if self.counter == 20:
             self.speed += 1
         if self.counter == 30:
+            self.speed += 1
             self.hp_dino_ges += 5
         if self.counter == 40:
             self.speed += 1
             self.hp_dino_ges += 5
-        self.points_raptor += 10
-        return self.points_raptor
+        if self.counter == 50:
+            self.speed += 1
+        if self.counter == 60:
+            self.speed += 1
+        if self.counter == 70:
+            self.speed += 1
+        self.points_fly += 10
 
 
 
@@ -133,6 +152,6 @@ class Raptor:
 
         self.frame_counter += 1
 
-        return result, self.points_raptor
+        return result, self.points_fly
 
 

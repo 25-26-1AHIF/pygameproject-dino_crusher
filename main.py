@@ -3,17 +3,19 @@ from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 from game_variables.player import Player
 from game_variables.raptor_enemy import Raptor
-
+from game_variables.fly_enemy import Fly
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
     starten_text = GameVariables.FONT_MIDDLE.render("Starten", True, "darkgreen")
     quit_text = GameVariables.FONT_MIDDLE.render("Exit", True, "darkred")
     settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "Orange")
+    inv_text = GameVariables.FONT_MIDDLE.render("Inventar", True, "gold")
 
     titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     starten_text_rect = starten_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
     quit_text_rect = quit_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 600))
     settings_text_rect = settings_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    inv_text_rect = inv_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
     background = pygame.image.load("assets/background.png").convert() #chatgpt für einzeigen von Hintergrund verwendet.
     running = True
 
@@ -33,6 +35,8 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.EXIT
                 if settings_text_rect.collidepoint(event.pos):
                     return GameScreens.SETTINGS
+                if inv_text_rect.collidepoint(event.pos):
+                    return GameScreens.INV
 
 
 
@@ -41,6 +45,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         screen.blit(source=starten_text, dest=starten_text_rect)
         screen.blit(source=quit_text, dest=quit_text_rect)
         screen.blit(source=settings_text, dest=settings_text_rect)
+        screen.blit(source=inv_text, dest=inv_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
     pygame.quit()
@@ -49,10 +54,15 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
 
 def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
+
     pygame.display.set_caption("Play Screen")
-    player = Player(screen)
+    player = Player(screen, pfad=GameVariables.PLAYER_SKIN)
     raptor = Raptor(screen)
+    fly = Fly(screen)
+    fly2 = Fly(screen)
     raptor_rect = pygame.Rect(500, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
+    fly_rect = pygame.Rect(500, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
+    fly2_rect = pygame.Rect(600, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
     background = pygame.image.load("assets/map.png").convert()
 
     running = True
@@ -71,15 +81,25 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                 mx, my = pygame.mouse.get_pos()
                 player.shoot(mx, my)
                 player.glock.shoot()
+                GameVariables.MISSLE_COUNT += 1
 
         screen.fill("black")
         screen.blit(background, (0, 0))
-        dmg = raptor.draw(screen, raptor_rect.x, raptor_rect.y)
-        dead = player.update_and_draw(dmg)
+        dmg, points_raptor = raptor.draw(screen, raptor_rect.x, raptor_rect.y, my_rect=raptor_rect, missles=player.missles)
+        dmg_fly, points_fly = fly.draw(screen, fly_rect.x, fly_rect.y, my_rect=fly_rect, missles=player.missles)
+        dmg_fly2, points_fly2 = fly2.draw(screen, fly2_rect.x, fly2_rect.y, my_rect=fly2_rect, missles=player.missles)
+        GameVariables.POINTS = points_raptor + points_fly + points_fly2
+        points_text = GameVariables.FONT_SMALL.render(f"Points: {GameVariables.POINTS}", True, "white")
+        points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH -75, 25))
+        screen.blit(source=points_text, dest=points_text_rect)
+        dead = player.update_and_draw(dmg, dmg_fly)
         player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
         raptor.update(raptor_rect, player_rect)
+        fly.update(fly_rect, player_rect)
+        fly2.update(fly2_rect, player_rect)
         if dead == "dead":
             return GameScreens.DEAD
+
 
         # habe ich gesucht wie man die fps sehen kann
         if GameVariables.FPS_VISIBLE:
@@ -93,7 +113,6 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     if GameVariables.FPS_VISIBLE:
         fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
-    else:
         fps_on = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
@@ -121,9 +140,9 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
-def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock):
+def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
     died_text = GameVariables.FONT_BIG.render("You died", True, "darkred")
-    points_text = GameVariables.FONT_MIDDLE.render("Points:", True, "darkred")
+    points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points} - {GameVariables.MISSLE_COUNT} = {points-GameVariables.MISSLE_COUNT}", True, "darkred")
     died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
     points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
     running = True
@@ -141,6 +160,60 @@ def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(source=points_text, dest=points_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
+
+
+def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
+    running = True
+    background = pygame.image.load("assets/background.png").convert()
+    skin1 = pygame.image.load("assets/glock2.png").convert_alpha()      # ki für convert alpha verwendet
+    skin2 = pygame.image.load("assets/glock3.png").convert_alpha()
+    skin3 = pygame.image.load("assets/glock4.png").convert_alpha()
+    skin4 = pygame.image.load("assets/glock5.png").convert_alpha()
+    skin1 = pygame.transform.scale(skin1, (120, 120))
+    skin2 = pygame.transform.scale(skin2, (120, 120))       # google verwendet wie man das bild skaliert
+    skin3 = pygame.transform.scale(skin3, (120, 120))
+    skin4 = pygame.transform.scale(skin4, (120, 120))
+    skin1_rect = skin1.get_rect(center=(200, 300))
+    skin2_rect = skin2.get_rect(center=(450, 300))
+    skin3_rect = skin3.get_rect(center=(700, 300))
+    skin4_rect = skin4.get_rect(center=(950, 300))
+    while running:
+
+        screen.blit(background, (0, 0))
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if skin1_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN = "assets/glock2.png"
+                if skin2_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN = "assets/glock3.png"
+                if skin3_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN = "assets/glock4.png"
+                if skin4_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN = "assets/glock5.png"
+
+
+
+        screen.blit(skin1, skin1_rect)
+        screen.blit(skin2, skin2_rect)
+        screen.blit(skin3, skin3_rect)
+        screen.blit(skin4, skin4_rect)
+        if GameVariables.PLAYER_SKIN == "assets/glock2.png":
+            pygame.draw.rect(surface=screen,rect=(skin1_rect.inflate(10, 10)), color="white", width=3)    # ki für inflate weil schöner
+        if GameVariables.PLAYER_SKIN == "assets/glock3.png":
+            pygame.draw.rect(surface=screen, rect=(skin2_rect.inflate(10, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN == "assets/glock4.png":
+            pygame.draw.rect(surface=screen,rect=(skin3_rect.inflate(10, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN == "assets/glock5.png":
+            pygame.draw.rect(surface=screen,rect=(skin4_rect.inflate(10, 10)), color="white", width=3)
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
+
 
 def main():
     GameVariables.init()
@@ -162,7 +235,9 @@ def main():
         elif GameScreens.actual_screen == GameScreens.EXIT:
             break
         elif GameScreens.actual_screen == GameScreens.DEAD:
-            GameScreens.actual_screen = dead_screen(screen, clock)
+            GameScreens.actual_screen = dead_screen(screen, clock, GameVariables.POINTS)
+        elif GameScreens.actual_screen == GameScreens.INV:
+            GameScreens.actual_screen = inventar(screen, clock)
 
     pygame.quit()
 
