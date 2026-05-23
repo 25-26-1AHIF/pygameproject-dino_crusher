@@ -4,17 +4,7 @@ from game_variables.sprites import Sprite
 class Glock:
 
     def __init__(self, pfad):
-        #self.gun_anim = Sprite("assets/[SHOOT WITH MUZZLE FLASH] Glock - P80 - Kopie.png",
-                               #12, pygame.Rect(0, 0, 64, 48), 3)
 
-        #self.gun_anim = Sprite("assets/glock2.png",
-                               #2, pygame.Rect(0, 10, 64, 48), 3)
-
-        #self.gun_anim = Sprite("assets/glock3.png",
-                               #2, pygame.Rect(0, 10, 64, 48), 3)
-
-        #self.gun_anim = Sprite("assets/glock4.png",
-                               #2, pygame.Rect(0, 10, 64, 48), 3)
 
         self.gun_anim = Sprite(pfad,
                                2, pygame.Rect(0, 10, 64, 48), 3)

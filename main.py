@@ -1,4 +1,5 @@
 import  pygame
+import json
 from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 from game_variables.player import Player
@@ -10,9 +11,11 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     quit_text = GameVariables.FONT_MIDDLE.render("Exit", True, "darkred")
     settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "Orange")
     inv_text = GameVariables.FONT_MIDDLE.render("Inventar", True, "gold")
+    high_text = GameVariables.FONT_MIDDLE.render("Highscores", True, "darkblue")
 
+    high_text_rect = high_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
     titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
-    starten_text_rect = starten_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
+    starten_text_rect = starten_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
     quit_text_rect = quit_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 600))
     settings_text_rect = settings_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
     inv_text_rect = inv_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
@@ -37,6 +40,8 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.SETTINGS
                 if inv_text_rect.collidepoint(event.pos):
                     return GameScreens.INV
+                if high_text_rect.collidepoint(event.pos):
+                    return GameScreens.HIGH
 
 
 
@@ -46,6 +51,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         screen.blit(source=quit_text, dest=quit_text_rect)
         screen.blit(source=settings_text, dest=settings_text_rect)
         screen.blit(source=inv_text, dest=inv_text_rect)
+        screen.blit(source=high_text, dest=high_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
     pygame.quit()
@@ -145,6 +151,7 @@ def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
     points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points} - {GameVariables.MISSLE_COUNT} = {points-GameVariables.MISSLE_COUNT}", True, "darkred")
     died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
     points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -160,6 +167,7 @@ def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
         screen.blit(source=points_text, dest=points_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
+
 
 
 def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
@@ -214,6 +222,51 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
+def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
+    hs_text = GameVariables.FONT_BIG.render("Highscores", True, "darkblue")
+    hs_text_rect = hs_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    background = pygame.image.load("assets/background.png").convert()
+
+    running = True
+    while running:
+        screen.blit(background, (0, 0))
+        highscores = []
+        with open("game_variables/highscore.json", "r") as fp:
+            inhalt = json.load(fp)
+            for high in inhalt:
+                highscores.append(high)
+
+        stoppen = False
+        while stoppen == False:
+            stoppen = True
+            for index in range(len(highscores) - 1):
+                element = highscores[index]
+                element_next = highscores[index + 1]
+                if element < element_next:
+                    highscores[index] = element_next
+                    highscores[index + 1] = element
+                    stoppen = False
+
+        for idx, hs in enumerate(highscores[:5]):
+
+            highs = GameVariables.FONT_MIDDLE.render(f"{idx+1}.             {hs}", True, "darkblue")
+            highs_rect = highs.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200 + idx*100))
+            screen.blit(source=highs, dest=highs_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
+        screen.blit(source=hs_text, dest=hs_text_rect)
+
+
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
+
+
+
 
 def main():
     GameVariables.init()
@@ -229,15 +282,28 @@ def main():
             screen.fill("black")
             GameScreens.actual_screen = main_screen(screen, clock)
         elif GameScreens.actual_screen == GameScreens.PLAY:
+            GameVariables.MISSLE_COUNT = 0
             GameScreens.actual_screen = play_screen(screen, clock)
         elif GameScreens.actual_screen == GameScreens.SETTINGS:
             GameScreens.actual_screen = settings(screen, clock)
         elif GameScreens.actual_screen == GameScreens.EXIT:
             break
         elif GameScreens.actual_screen == GameScreens.DEAD:
+            if not GameVariables.SAVED:
+                with open("game_variables/highscore.json", "r") as fp:
+                    inhalt = json.load(fp)
+                    inhalt.append(GameVariables.POINTS-GameVariables.MISSLE_COUNT)
+                with open("game_variables/highscore.json", "w") as fp:
+                    json.dump(inhalt, fp, indent=2)
+                GameVariables.SAVED = True
+
             GameScreens.actual_screen = dead_screen(screen, clock, GameVariables.POINTS)
+            GameVariables.MISSLE_COUNT = 0
+            GameVariables.SAVED = False
         elif GameScreens.actual_screen == GameScreens.INV:
             GameScreens.actual_screen = inventar(screen, clock)
+        elif GameScreens.actual_screen == GameScreens.HIGH:
+            GameScreens.actual_screen = highscore(screen, clock)
 
     pygame.quit()
 

@@ -11,6 +11,7 @@ class GameVariables:
     POINTS = 0
     MISSLE_SIZE =  32
     MISSLE_COUNT = 0
+    SAVED = False
 
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
@@ -36,5 +37,6 @@ class GameScreens:
     SETTINGS = "Settings"
     DEAD = "dead"
     INV = "inventory"
+    HIGH = "highscores"
     actual_screen = MAIN
 
