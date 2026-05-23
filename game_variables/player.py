@@ -21,28 +21,41 @@ class Player:
         self.idle_anim = Sprite("assets/DinoSprites - doux.png", 4, pygame.Rect(0, 0, 24, 24), 6, start_frame=0)
         self.idle_anim.load_spritesheet()
 
-        # Run Animation: 6 frames, startet bei Frame 10
-        self.run_anim = Sprite("assets/DinoSprites - doux.png", 6, pygame.Rect(0, 0, 24, 24), 6, start_frame=10)
+        # Run Animation: 6 frames, startet bei Frame 4
+        self.run_anim = Sprite("assets/DinoSprites - doux.png", 6, pygame.Rect(0, 0, 24, 24), 6, start_frame=4)
         self.run_anim.load_spritesheet()
 
-
+        self.facing_left = False
         self.on_ground = True
     def get_rect(self):
         return pygame.Rect(self.x_pos, self.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
 
 
     def move(self):
-        self.idle_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
         keys_pressed = pygame.key.get_pressed()
+        is_running = False
+
         if keys_pressed[pygame.K_a]:
             self.x_pos -= 5
-            self.run_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
+            self.facing_left = True
+            is_running = True
         if keys_pressed[pygame.K_d]:
             self.x_pos += 5
-            self.run_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
+            self.facing_left = False
+            is_running = True
         if keys_pressed[pygame.K_SPACE] and self.on_ground and self.y_velo == 0:
             self.y_velo = self.jump_strength
             self.on_ground = False
+
+        if is_running:
+            frame = self.run_anim.images[(self.frame_counter // self.run_anim.aimation_speed) % self.run_anim.image_count]
+        else:
+            frame = self.idle_anim.images[(self.frame_counter // self.idle_anim.aimation_speed) % self.idle_anim.image_count]
+
+        frame = pygame.transform.scale(frame, (48, 48))
+        if self.facing_left:
+            frame = pygame.transform.flip(frame, True, False)
+        self.screen.blit(frame, (self.x_pos, self.y_pos))
 
     def shoot(self, mx, my):
         missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5

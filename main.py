@@ -87,6 +87,11 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     pygame.quit()
 
 def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
+    fps_on =  GameVariables.FONT_MIDDLE.render("Fps on", True, "black")
+    settings_screen = pygame.image.load(
+        "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
+
+    fps_on_rect = fps_on.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     running = True
     while running:
         for event in pygame.event.get():
@@ -95,9 +100,16 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return GameScreens.MAIN
-        screen.fill("black")
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if fps_on_rect.collidepoint(event.pos):
+                    pass
+
+        screen.blit(settings_screen, (0, 0))
+        screen.blit(source=fps_on, dest=fps_on_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
+
+
 
 def main():
     GameVariables.init()

@@ -20,6 +20,8 @@ class Sprite:
                                                 self.image_rect.width, self.image_rect.height))
             self.images.append(image_surface)
 
-    def draw(self, screen: pygame.Surface, xpos: float, ypos: float, frame_counter: int):
-        screen.blit(self.images[(frame_counter // self.aimation_speed) % self.image_count],
-                    dest=(xpos, ypos))
+    def draw(self, screen: pygame.Surface, xpos: float, ypos: float, frame_counter: int, scale: int = None):
+        frame = self.images[(frame_counter // self.aimation_speed) % self.image_count]
+        if scale:
+            frame = pygame.transform.scale(frame, (scale, scale))
+        screen.blit(frame, dest=(xpos, ypos))
