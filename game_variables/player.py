@@ -4,6 +4,7 @@ from game_variables.missle import Missle
 from game_variables.missle import Missles
 from game_variables.game_variables import GameVariables
 from game_variables.sprites import Sprite
+from game_variables.weapons.glock import Glock
 
 class Player:
     def __init__(self, screen):
@@ -27,6 +28,9 @@ class Player:
 
         self.facing_left = False
         self.on_ground = True
+
+        self.glock = Glock()
+
     def get_rect(self):
         return pygame.Rect(self.x_pos, self.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
 
@@ -56,6 +60,7 @@ class Player:
         if self.facing_left:
             frame = pygame.transform.flip(frame, True, False)
         self.screen.blit(frame, (self.x_pos, self.y_pos))
+        self.glock.draw(self.screen, self.x_pos, self.y_pos,self.facing_left)
 
     def shoot(self, mx, my):
         missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5

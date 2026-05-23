@@ -68,8 +68,8 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.MAIN
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mx, my = pygame.mouse.get_pos()
-                pygame.draw.rect(surface=screen, rect=(mx, my, 10, 10), color="yellow")
                 player.shoot(mx, my)
+                player.glock.shoot()
 
         screen.fill("black")
         screen.blit(background, (0, 0))
