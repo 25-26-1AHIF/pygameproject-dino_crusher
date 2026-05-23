@@ -32,11 +32,14 @@ class Player:
 
 
     def move(self):
+        self.idle_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
         keys_pressed = pygame.key.get_pressed()
         if keys_pressed[pygame.K_a]:
             self.x_pos -= 5
+            self.run_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
         if keys_pressed[pygame.K_d]:
             self.x_pos += 5
+            self.run_anim.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
         if keys_pressed[pygame.K_SPACE] and self.on_ground and self.y_velo == 0:
             self.y_velo = self.jump_strength
             self.on_ground = False
@@ -103,10 +106,10 @@ class Player:
                 self.on_ground = True
 
 
-        pygame.draw.rect(surface=self.screen, rect=(self.x_pos,
-                                                             self.y_pos,
-                                                               GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE), color="red", width=0)
-        #self.animation.draw(self.screen, self.x_pos, self.y_pos, self.frame_counter)
+        #pygame.draw.rect(surface=self.screen, rect=(self.x_pos,
+                                                             #self.y_pos,
+                                                               #GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE), color="red", width=0)
+
         self.frame_counter += 1
 
 
