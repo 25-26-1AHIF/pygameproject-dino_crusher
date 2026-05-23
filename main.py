@@ -81,18 +81,20 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         if dead == "dead":
             return GameScreens.DEAD
 
-
         # habe ich gesucht wie man die fps sehen kann
-        fps_text = GameVariables.FONT_SMALL.render(f"FPS: {int(clock.get_fps())}", True, "white")
-        screen.blit(fps_text, (10, 10))
+        if GameVariables.FPS_VISIBLE:
+            fps_text = GameVariables.FONT_SMALL.render(f"FPS: {int(clock.get_fps())}", True, "white")
+            screen.blit(fps_text, (10, 10))
         pygame.display.flip()
-
         clock.tick(GameVariables.FPS)
 
     pygame.quit()
 
 def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
-    fps_on =  GameVariables.FONT_MIDDLE.render("Fps on", True, "black")
+    if GameVariables.FPS_VISIBLE:
+        fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
+    else:
+        fps_on = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
 
@@ -107,7 +109,12 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.MAIN
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if fps_on_rect.collidepoint(event.pos):
-                    pass
+                    GameVariables.FPS_VISIBLE = not GameVariables.FPS_VISIBLE
+
+                    if GameVariables.FPS_VISIBLE:
+                        fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
+                    else:
+                        fps_on = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
 
         screen.blit(settings_screen, (0, 0))
         screen.blit(source=fps_on, dest=fps_on_rect)

@@ -17,7 +17,7 @@ class Raptor:
         self.is_biting_y = False
         self.frame_counter = 0
         self.facing_left = False
-        self.speed = 3
+        self.speed = 2
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
         self.did_damage = False

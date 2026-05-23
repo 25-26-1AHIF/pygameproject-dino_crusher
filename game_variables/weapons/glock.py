@@ -25,7 +25,7 @@ class Glock:
             frame = self.gun_anim.images[0]
         if facing_left:
             frame = pygame.transform.flip(frame, True, False)
-            screen.blit(frame, (x - 20, y + 10)) # claude
+            screen.blit(frame, (x - 20, y + 10))
 
         else:
             screen.blit(frame, (x + 10, y + 10))

@@ -14,6 +14,7 @@ class GameVariables:
     DONT_SMALL: pygame.font.Font = None
 
     CLOCK = None
+    FPS_VISIBLE = True
 
     @staticmethod
     def init():
