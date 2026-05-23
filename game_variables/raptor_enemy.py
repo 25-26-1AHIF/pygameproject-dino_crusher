@@ -2,6 +2,7 @@ import pygame
 from game_variables.sprites import Sprite as SpriteSheet
 from game_variables.player import Player
 from game_variables.game_variables import GameVariables
+import time
 
 
 class Raptor:
@@ -19,6 +20,7 @@ class Raptor:
         self.speed = 3
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
+        self.did_damage = False
 
 
     def update(self, my_rect, player_rect):
@@ -36,17 +38,46 @@ class Raptor:
             self.is_biting_y = True
         else:
             self.is_biting_y = False
-    def draw(self, screen, x, y):
-        if self.is_biting_x == True and self.is_biting_y == False:
-            # berechnugnen ki claude
-            frame = self.bite_anim.images[(self.frame_counter // self.bite_anim.aimation_speed) % self.bite_anim.image_count]
-        else:
 
-            frame = self.run_anim.images[(self.frame_counter // self.run_anim.aimation_speed) % self.run_anim.image_count]
+    def draw(self, screen, x, y):               # für die damage ticks chatgpt verwendet damit es nur True returned und somit damage macht wenn die bite animation im 3 frame ist
+
+        if self.is_biting_x and not self.is_biting_y:
+
+            current_frame = (
+                    (self.frame_counter // self.bite_anim.aimation_speed)
+                    % self.bite_anim.image_count
+            )
+
+            frame = self.bite_anim.images[current_frame]
+
+
+            if current_frame == 2 and not self.did_damage:
+                result = True
+                self.did_damage = True
+            else:
+                result = False
+
+        else:
+            current_frame = (
+                    (self.frame_counter // self.run_anim.aimation_speed)
+                    % self.run_anim.image_count
+            )
+
+            frame = self.run_anim.images[current_frame]
+
+            result = False
+
         scaled = pygame.transform.scale(frame, (400, 200))
-        # berechnugnen ki claude
+        if current_frame != 2:
+            self.did_damage = False
 
         if self.facing_left:
             scaled = pygame.transform.flip(scaled, True, False)
+
         screen.blit(scaled, (x, y))
+
         self.frame_counter += 1
+
+        return result
+
+

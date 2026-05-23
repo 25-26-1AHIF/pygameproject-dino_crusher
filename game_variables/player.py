@@ -1,8 +1,11 @@
+import time
+
 import pygame
 import math
 from game_variables.missle import Missle
 from game_variables.missle import Missles
 from game_variables.game_variables import GameVariables
+from game_variables.game_variables import GameScreens
 from game_variables.sprites import Sprite
 from game_variables.weapons.glock import Glock
 
@@ -21,8 +24,11 @@ class Player:
         # Idle Animation: 4 frames, startet bei Frame 0
         self.idle_anim = Sprite("assets/DinoSprites - doux.png", 4, pygame.Rect(0, 0, 24, 24), 6, start_frame=0)
         self.idle_anim.load_spritesheet()
+        self.hp = 200
+        self.dino_dmg = 40
 
         # Run Animation: 6 frames, startet bei Frame 4
+        # Gesamte Animation für player mit hochscalieren auf die richtige größe und das teilen der frames weil das bild alle animationen hatte und wir nicht alle wollten mit Claude gemacht
         self.run_anim = Sprite("assets/DinoSprites - doux.png", 6, pygame.Rect(0, 0, 24, 24), 6, start_frame=4)
         self.run_anim.load_spritesheet()
 
@@ -33,6 +39,8 @@ class Player:
 
     def get_rect(self):
         return pygame.Rect(self.x_pos, self.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
+
+
 
 
     def move(self):
@@ -78,10 +86,10 @@ class Player:
 
         self.missles.add_rocket(missle)
 
-    def update_and_draw(self):
+    def update_and_draw(self, dmg):
         player_get_rect = self.get_rect()
         rect_2 = pygame.Rect(319, 460, 100, 40)
-        rect_3 = pygame.Rect(525, 368, 100, 10)
+        rect_3 = pygame.Rect(525, 369, 100, 10)
         rect_4 = pygame.Rect(650, 303, 115, 10)
         rect_5 = pygame.Rect(805, 308, 40, 10)
         rect_6 = pygame.Rect(892, 349, 100, 10)
@@ -123,6 +131,13 @@ class Player:
                 self.y_velo = 0
                 self.on_ground = True
 
+        if dmg == True:
+            self.hp -= self.dino_dmg
+            if self.hp == 0:
+                return GameScreens.DEAD
+
+
+        pygame.draw.rect(surface=self.screen, rect=(50, 50, self.hp, 20), color="green", width=0)
 
         #pygame.draw.rect(surface=self.screen, rect=(self.x_pos,
                                                              #self.y_pos,

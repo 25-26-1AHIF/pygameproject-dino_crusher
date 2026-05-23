@@ -66,6 +66,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return GameScreens.MAIN
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mx, my = pygame.mouse.get_pos()
                 player.shoot(mx, my)
@@ -73,10 +74,14 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
         screen.fill("black")
         screen.blit(background, (0, 0))
-        player.update_and_draw()
+        dmg = raptor.draw(screen, raptor_rect.x, raptor_rect.y)
+        dead = player.update_and_draw(dmg)
         player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
         raptor.update(raptor_rect, player_rect)
-        raptor.draw(screen, raptor_rect.x, raptor_rect.y)
+        if dead == "dead":
+            return GameScreens.DEAD
+
+
         # habe ich gesucht wie man die fps sehen kann
         fps_text = GameVariables.FONT_SMALL.render(f"FPS: {int(clock.get_fps())}", True, "white")
         screen.blit(fps_text, (10, 10))
@@ -109,7 +114,26 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
+def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock):
+    died_text = GameVariables.FONT_BIG.render("You died", True, "darkred")
+    points_text = GameVariables.FONT_MIDDLE.render("Points:", True, "darkred")
+    died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
+    points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
 
+
+        screen.fill("black")
+        screen.blit(source=died_text, dest=died_text_rect)
+        screen.blit(source=points_text, dest=points_text_rect)
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
 
 def main():
     GameVariables.init()
@@ -130,6 +154,9 @@ def main():
             GameScreens.actual_screen = settings(screen, clock)
         elif GameScreens.actual_screen == GameScreens.EXIT:
             break
+        elif GameScreens.actual_screen == GameScreens.DEAD:
+            GameScreens.actual_screen = dead_screen(screen, clock)
+
     pygame.quit()
 
 
