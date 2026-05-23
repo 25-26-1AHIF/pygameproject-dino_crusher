@@ -51,7 +51,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     pygame.display.set_caption("Play Screen")
     player = Player(screen)
-    raptor = Raptor()
+    raptor = Raptor(screen)
     raptor_rect = pygame.Rect(500, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
     background = pygame.image.load("assets/map.png").convert()
 
