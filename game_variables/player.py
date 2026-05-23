@@ -17,6 +17,13 @@ class Player:
         self.gravity = 0.8
         self.jump_strength = -17
         self.missles = Missles(screen)
+        # Idle Animation: 4 frames, startet bei Frame 0
+        self.idle_anim = Sprite("assets/DinoSprites - doux.png", 4, pygame.Rect(0, 0, 24, 24), 6, start_frame=0)
+        self.idle_anim.load_spritesheet()
+
+        # Run Animation: 6 frames, startet bei Frame 10
+        self.run_anim = Sprite("assets/DinoSprites - doux.png", 6, pygame.Rect(0, 0, 24, 24), 6, start_frame=10)
+        self.run_anim.load_spritesheet()
 
 
         self.on_ground = True
