@@ -1,5 +1,7 @@
 import pygame
-
+import math
+from game_variables.missle import Missle
+from game_variables.missle import Missles
 from game_variables.game_variables import GameVariables
 from game_variables.sprites import Sprite
 
@@ -14,6 +16,7 @@ class Player:
         self.y_velo = 0
         self.gravity = 0.8
         self.jump_strength = -17
+        self.missles = Missles(screen)
 
 
         self.on_ground = True
@@ -31,7 +34,21 @@ class Player:
             self.y_velo = self.jump_strength
             self.on_ground = False
 
+    def shoot(self, mx, my):
+        missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5
+        missle_y_pos = self.y_pos + GameVariables.SQUARE_SIZE / 4
 
+
+        speed = 10
+        self.dx = mx - missle_x_pos
+        self.dy = my - missle_y_pos
+        distance_distance = self.dx * self.dx + self.dy * self.dy
+        distance = math.sqrt(distance_distance)     # chatgpt für square root verwendet (habe vergessen wie es funktioniert)
+        self.dx = self.dx / distance * speed
+        self.dy = self.dy / distance * speed
+        missle = Missle(xpos=missle_x_pos, ypos=missle_y_pos, screen=self.screen, dx=self.dx, dy=self.dy)
+
+        self.missles.add_rocket(missle)
 
     def update_and_draw(self):
         player_get_rect = self.get_rect()
@@ -40,6 +57,8 @@ class Player:
         rect_4 = pygame.Rect(650, 303, 115, 10)
         rect_5 = pygame.Rect(805, 308, 40, 10)
         rect_6 = pygame.Rect(892, 349, 100, 10)
+
+        self.missles.update_and_draw()
 
         self.move()
         self.y_velo += self.gravity

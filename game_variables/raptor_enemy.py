@@ -11,7 +11,7 @@ class Raptor:
         self.frame_counter = 0
         self.facing_left = False
 
-    SPEED = 4
+    SPEED = 3
 
     def update(self, my_rect, player_rect):
         if my_rect.x + self.SPEED < player_rect.x:
