@@ -11,12 +11,11 @@ from game_variables.missle import Missles
 
 class Fly:
     def __init__(self, screen):
-        self.run_anim = SpriteSheet("assets/raptor_run.png", 6, pygame.Rect(0, 0, 128, 64), 8)
+        self.run_anim = SpriteSheet("assets/ptero fly - Kopie.png", 6, pygame.Rect(0, 0, 16, 16), 6)
         self.run_anim.load_spritesheet()
-        self.bite_anim = SpriteSheet("assets/raptor_bite_transparent.png", 10, pygame.Rect(0, 0, 128, 64), 6)
+        self.bite_anim = SpriteSheet("assets/ptero atack - Kopie.png", 5, pygame.Rect(0, 0, 16, 16), 5)
         self.bite_anim.load_spritesheet()
         self.screen = screen
-        self.player = Player(screen, GameVariables.PLAYER_SKIN)
         self.is_biting_x = False
         self.is_biting_y = False
         self.frame_counter = 0
@@ -33,8 +32,8 @@ class Fly:
 
 
     def get_rect(self, my_rect):        # chatgpt für !!bessere!! hitboxen verwendet
-        hitbox_width = 220
-        hitbox_height = 70
+        hitbox_width = 16
+        hitbox_height = 96
 
         hitbox_x = my_rect.x + 90
         hitbox_y = my_rect.y + 110
@@ -130,7 +129,7 @@ class Fly:
 
             result = False
 
-        scaled = pygame.transform.scale(frame, (400, 200))
+        scaled = pygame.transform.scale(frame, (96, 96))
         if current_frame != 0:
             self.did_damage = False
 

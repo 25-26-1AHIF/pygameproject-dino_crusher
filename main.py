@@ -102,7 +102,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         bullets_text_rect = bullets_text.get_rect(center=(GameVariables.SCREEN_WIDTH -100, 50))
         screen.blit(source=points_text, dest=points_text_rect)
         screen.blit(source=bullets_text, dest=bullets_text_rect)
-        dead = player.update_and_draw(dmg, dmg_fly)
+        dead = player.update_and_draw(dmg, dmg_fly, dmg_fly2)
         player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
         raptor.update(raptor_rect, player_rect)
         fly.update(fly_rect, player_rect)

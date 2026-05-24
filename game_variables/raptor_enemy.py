@@ -16,7 +16,6 @@ class Raptor:
         self.bite_anim = SpriteSheet("assets/raptor_bite_transparent.png", 10, pygame.Rect(0, 0, 128, 64), 6)
         self.bite_anim.load_spritesheet()
         self.screen = screen
-        self.player = Player(screen, pfad=GameVariables.PLAYER_SKIN)
         self.is_biting_x = False
         self.is_biting_y = False
         self.frame_counter = 0

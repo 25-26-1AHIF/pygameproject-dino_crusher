@@ -106,7 +106,7 @@ class Player:
         return self.shots_fired
 
 
-    def update_and_draw(self, dmg, dmg_fly):
+    def update_and_draw(self, dmg, dmg_fly, dmg_fly2):
         player_get_rect = self.get_rect()
         rect_2 = pygame.Rect(319, 460, 100, 40)
         rect_3 = pygame.Rect(525, 369, 100, 10)
@@ -154,6 +154,8 @@ class Player:
         if dmg == True:
             self.hp -= self.dino_dmg
         if dmg_fly == True:
+            self.hp -= self.dino_dmg
+        if dmg_fly2 == True:
             self.hp -= self.dino_dmg
 
         if self.x_pos < -10:
