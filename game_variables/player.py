@@ -34,7 +34,10 @@ class Player:
 
         self.facing_left = False
         self.on_ground = True
-
+        self.shots_fired = 0
+        self.reload_time = 2000
+        self.last_reload = 0
+        self.reloading = False
         self.glock = Glock(pfad=pfad)
 
 
@@ -72,6 +75,14 @@ class Player:
         self.glock.draw(self.screen, self.x_pos, self.y_pos,self.facing_left)
 
     def shoot(self, mx, my):
+        current_time = pygame.time.get_ticks()
+
+        if self.reloading:
+            if current_time - self.last_reload >= self.reload_time:         # chatgpt für die logik beim reloaden verwendet
+                self.reloading = False
+                self.shots_fired = 0
+            else:
+                return
         missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5
         missle_y_pos = self.y_pos + GameVariables.SQUARE_SIZE / 4
 
@@ -80,13 +91,19 @@ class Player:
         self.dx = mx - missle_x_pos
         self.dy = my - missle_y_pos
         distance_distance = self.dx * self.dx + self.dy * self.dy
-        distance = math.sqrt(distance_distance)     # chatgpt für square root verwendet (habe vergessen wie es funktioniert)
+        distance = math.sqrt(distance_distance)     # chatgpt für square root verwendet (habe vergessen wie man sqrt von etwas berechnet)
         self.dx = self.dx / distance * speed
         self.dy = self.dy / distance * speed
         missle = Missle(xpos=missle_x_pos, ypos=missle_y_pos, screen=self.screen, dx=self.dx, dy=self.dy)
 
 
         self.missles.add_rocket(missle)
+        self.shots_fired += 1
+
+        if self.shots_fired >= 30:
+            self.reloading = True
+            self.last_reload = current_time
+        return self.shots_fired
 
 
     def update_and_draw(self, dmg, dmg_fly):
@@ -149,6 +166,7 @@ class Player:
 
 
         pygame.draw.rect(surface=self.screen, rect=(50, 50, self.hp, 20), color="green", width=0)
+        pygame.draw.rect(surface=self.screen, rect=(50, 50, 200, 20), color="black", width=3)
 
         #pygame.draw.rect(surface=self.screen, rect=(self.x_pos,
                                                              #self.y_pos,

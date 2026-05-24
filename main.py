@@ -9,7 +9,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
     starten_text = GameVariables.FONT_MIDDLE.render("Starten", True, "darkgreen")
     quit_text = GameVariables.FONT_MIDDLE.render("Exit", True, "darkred")
-    settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "Orange")
+    settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "darkorange")
     inv_text = GameVariables.FONT_MIDDLE.render("Inventar", True, "gold")
     high_text = GameVariables.FONT_MIDDLE.render("Highscores", True, "darkblue")
 
@@ -66,9 +66,9 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     raptor = Raptor(screen)
     fly = Fly(screen)
     fly2 = Fly(screen)
-    raptor_rect = pygame.Rect(500, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
-    fly_rect = pygame.Rect(500, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
-    fly2_rect = pygame.Rect(600, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
+    raptor_rect = pygame.Rect(900, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
+    fly_rect = pygame.Rect(900, 100, 400, 200)
+    fly2_rect = pygame.Rect(0, 100, 400, 200)
     background = pygame.image.load("assets/map.png").convert()
 
     running = True
@@ -84,8 +84,9 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.MAIN
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+
                 mx, my = pygame.mouse.get_pos()
-                player.shoot(mx, my)
+                GameVariables.BULLETS = player.shoot(mx, my)
                 player.glock.shoot()
                 GameVariables.MISSLE_COUNT += 1
 
@@ -95,9 +96,12 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         dmg_fly, points_fly = fly.draw(screen, fly_rect.x, fly_rect.y, my_rect=fly_rect, missles=player.missles)
         dmg_fly2, points_fly2 = fly2.draw(screen, fly2_rect.x, fly2_rect.y, my_rect=fly2_rect, missles=player.missles)
         GameVariables.POINTS = points_raptor + points_fly + points_fly2
-        points_text = GameVariables.FONT_SMALL.render(f"Points: {GameVariables.POINTS}", True, "white")
+        points_text = GameVariables.FONT_SMALL.render(f"Points: {GameVariables.POINTS}", True, "gold")
+        bullets_text = GameVariables.FONT_SMALL.render(f"Bullets fired: {GameVariables.BULLETS}/30", True, "gold")
         points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH -75, 25))
+        bullets_text_rect = bullets_text.get_rect(center=(GameVariables.SCREEN_WIDTH -100, 50))
         screen.blit(source=points_text, dest=points_text_rect)
+        screen.blit(source=bullets_text, dest=bullets_text_rect)
         dead = player.update_and_draw(dmg, dmg_fly)
         player_rect = pygame.Rect(player.x_pos, player.y_pos, GameVariables.SQUARE_SIZE, GameVariables.SQUARE_SIZE)
         raptor.update(raptor_rect, player_rect)
@@ -117,13 +121,14 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     pygame.quit()
 
 def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
-    if GameVariables.FPS_VISIBLE:
-        fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
-        fps_on = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
+
+    fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
+    fps_off = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
 
     fps_on_rect = fps_on.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    fps_off_rect = fps_off.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     running = True
     while running:
         for event in pygame.event.get():
@@ -136,13 +141,16 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                 if fps_on_rect.collidepoint(event.pos):
                     GameVariables.FPS_VISIBLE = not GameVariables.FPS_VISIBLE
 
-                    if GameVariables.FPS_VISIBLE:
+                    if GameVariables.FPS_VISIBLE == True:
                         fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
                     else:
-                        fps_on = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
+                        fps_off = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
 
         screen.blit(settings_screen, (0, 0))
-        screen.blit(source=fps_on, dest=fps_on_rect)
+        if GameVariables.FPS_VISIBLE == True:
+            screen.blit(source=fps_on, dest=fps_on_rect)
+        else:
+            screen.blit(source=fps_off, dest=fps_off_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 

@@ -12,6 +12,7 @@ class GameVariables:
     MISSLE_SIZE =  32
     MISSLE_COUNT = 0
     SAVED = False
+    BULLETS = 0
 
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
