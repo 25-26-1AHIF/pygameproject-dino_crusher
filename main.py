@@ -72,7 +72,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     background = pygame.image.load("assets/map.png").convert()
 
     running = True
-
+#
     while running:
 
         for event in pygame.event.get():
@@ -87,7 +87,11 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
                 mx, my = pygame.mouse.get_pos()
                 GameVariables.BULLETS = player.shoot(mx, my)
-                player.glock.shoot()
+                if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+                    player.glock.shoot()
+                elif GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+                    player.ak.shoot()
+
                 GameVariables.MISSLE_COUNT += 1
 
         screen.fill("black")
@@ -97,7 +101,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         dmg_fly2, points_fly2 = fly2.draw(screen, fly2_rect.x, fly2_rect.y, my_rect=fly2_rect, missles=player.missles)
         GameVariables.POINTS = points_raptor + points_fly + points_fly2
         points_text = GameVariables.FONT_SMALL.render(f"Points: {GameVariables.POINTS}", True, "gold")
-        bullets_text = GameVariables.FONT_SMALL.render(f"Bullets fired: {GameVariables.BULLETS}/30", True, "gold")
+        bullets_text = GameVariables.FONT_SMALL.render(f"Bullets fired: {GameVariables.BULLETS}/{GameVariables.MAX_BULLETS}", True, "gold")
         points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH -75, 25))
         bullets_text_rect = bullets_text.get_rect(center=(GameVariables.SCREEN_WIDTH -100, 50))
         screen.blit(source=points_text, dest=points_text_rect)
@@ -190,7 +194,7 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
 def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
     died_text = GameVariables.FONT_BIG.render("You died", True, "darkred")
-    points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points} - {GameVariables.MISSLE_COUNT} = {points-GameVariables.MISSLE_COUNT}", True, "darkred")
+    points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points}", True, "darkred")
     died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
     points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
 
@@ -335,7 +339,7 @@ def main():
             if not GameVariables.SAVED:
                 with open("game_variables/highscore.json", "r") as fp:
                     inhalt = json.load(fp)
-                    inhalt.append(GameVariables.POINTS-GameVariables.MISSLE_COUNT)
+                    inhalt.append(GameVariables.POINTS)
                 with open("game_variables/highscore.json", "w") as fp:
                     json.dump(inhalt, fp, indent=2)
                 GameVariables.SAVED = True

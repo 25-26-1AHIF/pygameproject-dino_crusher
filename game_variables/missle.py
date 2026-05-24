@@ -9,7 +9,7 @@ class Missle:
         self.dy = dy
         self.screen = screen
 
-
+#
 
 
     def get_rect(self) -> pygame.Rect:

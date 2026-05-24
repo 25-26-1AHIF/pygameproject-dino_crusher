@@ -8,6 +8,7 @@ from game_variables.game_variables import GameVariables
 from game_variables.game_variables import GameScreens
 from game_variables.sprites import Sprite
 from game_variables.weapons.glock import Glock
+from game_variables.weapons.ak47 import Ak
 
 class Player:
     def __init__(self, screen, pfad):
@@ -40,6 +41,7 @@ class Player:
         self.last_reload = 0
         self.reloading = False
         self.glock = Glock(pfad=pfad)
+        self.ak = Ak()
 
 
     def get_rect(self):
@@ -73,7 +75,11 @@ class Player:
         if self.facing_left:
             frame = pygame.transform.flip(frame, True, False)
         self.screen.blit(frame, (self.x_pos, self.y_pos))
-        self.glock.draw(self.screen, self.x_pos, self.y_pos,self.facing_left)
+        if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+            self.glock.draw(self.screen, self.x_pos, self.y_pos, self.facing_left)
+        elif GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+            self.ak.draw(self.screen, self.x_pos, self.y_pos,self.facing_left)
+
 
     def shoot(self, mx, my):
         current_time = pygame.time.get_ticks()
@@ -86,7 +92,7 @@ class Player:
                 return
         missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5
         missle_y_pos = self.y_pos + GameVariables.SQUARE_SIZE / 4
-
+#
 
         speed = 10
         self.dx = mx - missle_x_pos
@@ -100,11 +106,18 @@ class Player:
 
         self.missles.add_rocket(missle)
         self.shots_fired += 1
-
-        if self.shots_fired >= 30:
-            self.reloading = True
-            self.last_reload = current_time
-        return self.shots_fired
+        if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+            if self.shots_fired >= 30:
+                self.reloading = True
+                self.last_reload = current_time
+                GameVariables.MAX_BULLETS = 30
+            return self.shots_fired
+        elif GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+            if self.shots_fired >= 50:
+                self.reloading = True
+                self.last_reload = current_time
+                GameVariables.MAX_BULLETS = 50
+            return self.shots_fired
 
 
     def update_and_draw(self, dmg, dmg_fly, dmg_fly2):

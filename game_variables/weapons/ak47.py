@@ -1,13 +1,13 @@
 import pygame
 from game_variables.sprites import Sprite
 
-class Glock:
+class Ak:
 
-    def __init__(self, pfad):
+    def __init__(self):
 #
 
-        self.gun_anim = Sprite(pfad,
-                               2, pygame.Rect(0, 10, 64, 48), 3)
+        self.gun_anim = Sprite("assets/ak47_1.png",
+                               2, pygame.Rect(0, 0, 64, 48), 0)
         self.gun_anim.load_spritesheet()
         self.is_shooting = False
         self.shoot_frame = 0
