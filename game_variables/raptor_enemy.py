@@ -78,6 +78,7 @@ class Raptor:
             self.speed += 1
             self.hp_dino_ges += 5
         self.points_raptor += 10
+        GameVariables.ENEMYS_KILLED += 1
         return self.points_raptor
 
 
@@ -128,7 +129,10 @@ class Raptor:
                     self.hp_dino = self.hp_dino_ges
                     break
                 else:
-                    self.hp_dino -= self.player_dmg
+                    if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+                        self.hp_dino -= self.player_dmg
+                    elif GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+                        self.hp_dino -= self.player_dmg + 5
 
         self.frame_counter += 1
 

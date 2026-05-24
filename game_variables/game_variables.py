@@ -18,10 +18,11 @@ class GameVariables:
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
     FONT_SMALL: pygame.font.Font = None
-
+    ENEMYS_KILLED = 0
     CLOCK = None
     FPS_VISIBLE = True
-
+    MAX_BULLETS = 30
+    TOLERANCE = 15
     @staticmethod
     def init():
         pygame.init()

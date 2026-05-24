@@ -98,6 +98,7 @@ class Fly:
         if self.counter == 70:
             self.speed += 1
         self.points_fly += 10
+        GameVariables.ENEMYS_KILLED += 1
 
 
 
@@ -147,7 +148,10 @@ class Fly:
                     self.hp_dino = self.hp_dino_ges
                     break
                 else:
-                    self.hp_dino -= self.player_dmg
+                    if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+                        self.hp_dino -= self.player_dmg
+                    elif GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+                        self.hp_dino -= self.player_dmg + 5
 
         self.frame_counter += 1
 
