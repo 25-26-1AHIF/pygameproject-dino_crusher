@@ -92,7 +92,7 @@ class Player:
                 return
         missle_x_pos = self.x_pos + GameVariables.SQUARE_SIZE / 2 - 5
         missle_y_pos = self.y_pos + GameVariables.SQUARE_SIZE / 4
-
+#
 
         speed = 10
         self.dx = mx - missle_x_pos

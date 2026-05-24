@@ -4,7 +4,7 @@ from game_variables.sprites import Sprite
 class Ak:
 
     def __init__(self):
-
+#
 
         self.gun_anim = Sprite("assets/ak47_1.png",
                                2, pygame.Rect(0, 0, 64, 48), 0)

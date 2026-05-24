@@ -9,7 +9,7 @@ class Sprite:
         self.aimation_speed = animation_speed
         self.start_frame = start_frame # claude:  wir haben so ein charackter genommen wo alle animatioen in einer png sind
         # sind ich habe claude gefragt wie ich das machen kann
-
+#
     def load_spritesheet(self):
         sprite_sheet = pygame.image.load(self.filepath).convert_alpha()
 

@@ -114,7 +114,7 @@ class Raptor:
         scaled = pygame.transform.scale(frame, (400, 200))
         if current_frame != 0:
             self.did_damage = False
-
+#
         if self.facing_left:
             scaled = pygame.transform.flip(scaled, True, False)
 

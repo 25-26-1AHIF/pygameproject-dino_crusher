@@ -4,7 +4,7 @@ from game_variables.sprites import Sprite
 class Glock:
 
     def __init__(self, pfad):
-
+#
 
         self.gun_anim = Sprite(pfad,
                                2, pygame.Rect(0, 10, 64, 48), 3)

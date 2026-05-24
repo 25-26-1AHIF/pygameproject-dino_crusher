@@ -72,7 +72,7 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     background = pygame.image.load("assets/map.png").convert()
 
     running = True
-
+#
     while running:
 
         for event in pygame.event.get():
