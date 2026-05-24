@@ -124,11 +124,17 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
 
     fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
     fps_off = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
+    song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
+    song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
+
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
 
     fps_on_rect = fps_on.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     fps_off_rect = fps_off.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    song1_rect = song1_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    song2_rect = song2_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 280))
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -141,6 +147,15 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                 if fps_on_rect.collidepoint(event.pos):
                     GameVariables.FPS_VISIBLE = not GameVariables.FPS_VISIBLE
 
+                if song1_rect.collidepoint(event.pos): # um musiken zu verwenden habe ich claude verwendet
+                    GameVariables.MUSIC_TRACK = 1
+                    pygame.mixer.music.load("assets/Expeditionary.mp3")
+                    pygame.mixer.music.play(-1)
+                if song2_rect.collidepoint(event.pos):
+                    GameVariables.MUSIC_TRACK = 2
+                    pygame.mixer.music.load("assets/Strength of the Titans.mp3")
+                    pygame.mixer.music.play(-1)
+
                     if GameVariables.FPS_VISIBLE == True:
                         fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
                     else:
@@ -151,6 +166,16 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
             screen.blit(source=fps_on, dest=fps_on_rect)
         else:
             screen.blit(source=fps_off, dest=fps_off_rect)
+        # farbe immer basierend auf aktuellem track
+        if GameVariables.MUSIC_TRACK == 1:
+            song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "green")
+            song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
+        else:
+            song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
+            song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "green")
+
+        screen.blit(song1_text, song1_rect)
+        screen.blit(song2_text, song2_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
@@ -168,6 +193,7 @@ def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return GameScreens.MAIN
+
 
 
         screen.fill("black")

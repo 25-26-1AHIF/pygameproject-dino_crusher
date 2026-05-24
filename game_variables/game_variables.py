@@ -13,6 +13,7 @@ class GameVariables:
     MISSLE_COUNT = 0
     SAVED = False
     BULLETS = 0
+    MUSIC_TRACK = 1
 
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
