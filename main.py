@@ -126,6 +126,8 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     fps_off = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
     song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
     song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
+    song3_text = GameVariables.FONT_MIDDLE.render("Song: Linked", True, "white")
+
 
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
@@ -134,6 +136,7 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     fps_off_rect = fps_off.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     song1_rect = song1_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
     song2_rect = song2_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 280))
+    song3_rect = song3_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 360))
 
     running = True
     while running:
@@ -155,27 +158,33 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     GameVariables.MUSIC_TRACK = 2
                     pygame.mixer.music.load("assets/Strength of the Titans.mp3")
                     pygame.mixer.music.play(-1)
-
-                    if GameVariables.FPS_VISIBLE == True:
-                        fps_on = GameVariables.FONT_MIDDLE.render("FPS: ON", True, "green")
-                    else:
-                        fps_off = GameVariables.FONT_MIDDLE.render("FPS: OFF", True, "red")
+                if song3_rect.collidepoint(event.pos):
+                    GameVariables.MUSIC_TRACK = 3
+                    pygame.mixer.music.load("assets/Jim Yosef, Anna Yvette - Linked [NCS Release].mp3")
+                    pygame.mixer.music.play(-1)
 
         screen.blit(settings_screen, (0, 0))
         if GameVariables.FPS_VISIBLE == True:
             screen.blit(source=fps_on, dest=fps_on_rect)
         else:
             screen.blit(source=fps_off, dest=fps_off_rect)
-        # farbe immer basierend auf aktuellem track
+
         if GameVariables.MUSIC_TRACK == 1:
             song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "green")
             song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
-        else:
+            song3_text = GameVariables.FONT_MIDDLE.render("Song: Linked", True, "white")
+        elif GameVariables.MUSIC_TRACK == 2:
             song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
             song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "green")
+            song3_text = GameVariables.FONT_MIDDLE.render("Song: Linked", True, "white")
+        else:
+            song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
+            song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
+            song3_text = GameVariables.FONT_MIDDLE.render("Song: Linked", True, "green")
 
         screen.blit(song1_text, song1_rect)
         screen.blit(song2_text, song2_rect)
+        screen.blit(song3_text, song3_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
