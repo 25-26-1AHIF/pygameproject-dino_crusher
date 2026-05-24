@@ -1,4 +1,6 @@
 import pygame
+
+from game_variables.game_variables import GameVariables
 from game_variables.sprites import Sprite
 
 class Ak:
@@ -6,7 +8,7 @@ class Ak:
     def __init__(self):
 #
 
-        self.gun_anim = Sprite("assets/ak47_1.png",
+        self.gun_anim = Sprite(GameVariables.PLAYER_SKIN_AK,
                                2, pygame.Rect(0, 0, 64, 48), 0)
         self.gun_anim.load_spritesheet()
         self.is_shooting = False

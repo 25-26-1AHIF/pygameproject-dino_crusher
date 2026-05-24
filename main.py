@@ -101,6 +101,10 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         dmg_fly2, points_fly2 = fly2.draw(screen, fly2_rect.x, fly2_rect.y, my_rect=fly2_rect, missles=player.missles)
         GameVariables.POINTS = points_raptor + points_fly + points_fly2
         points_text = GameVariables.FONT_SMALL.render(f"Points: {GameVariables.POINTS}", True, "gold")
+        if GameVariables.ENEMYS_KILLED <= GameVariables.TOLERANCE:
+            GameVariables.MAX_BULLETS = 30
+        if GameVariables.ENEMYS_KILLED > GameVariables.TOLERANCE:
+            GameVariables.MAX_BULLETS = 50
         bullets_text = GameVariables.FONT_SMALL.render(f"Bullets fired: {GameVariables.BULLETS}/{GameVariables.MAX_BULLETS}", True, "gold")
         points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH -75, 25))
         bullets_text_rect = bullets_text.get_rect(center=(GameVariables.SCREEN_WIDTH -100, 50))
@@ -228,10 +232,23 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
     skin2 = pygame.transform.scale(skin2, (120, 120))       # google verwendet wie man das bild skaliert
     skin3 = pygame.transform.scale(skin3, (120, 120))
     skin4 = pygame.transform.scale(skin4, (120, 120))
-    skin1_rect = skin1.get_rect(center=(200, 300))
-    skin2_rect = skin2.get_rect(center=(450, 300))
-    skin3_rect = skin3.get_rect(center=(700, 300))
-    skin4_rect = skin4.get_rect(center=(950, 300))
+    skin1_rect = skin1.get_rect(center=(200, 200))
+    skin2_rect = skin2.get_rect(center=(450, 200))
+    skin3_rect = skin3.get_rect(center=(700, 200))
+    skin4_rect = skin4.get_rect(center=(950, 200))
+
+    skin5 = pygame.image.load("assets/ak47_1.png").convert_alpha()
+    skin6 = pygame.image.load("assets/ak47_2.png").convert_alpha()
+    skin7 = pygame.image.load("assets/ak47_3.png").convert_alpha()
+    skin8 = pygame.image.load("assets/ak47_4.png").convert_alpha()
+    skin5 = pygame.transform.scale(skin5, (240, 120))
+    skin6 = pygame.transform.scale(skin6, (240, 120))
+    skin7 = pygame.transform.scale(skin7, (240, 120))
+    skin8 = pygame.transform.scale(skin8, (240, 120))
+    skin5_rect = skin5.get_rect(center=(170, 400))
+    skin6_rect = skin6.get_rect(center=(420, 400))
+    skin7_rect = skin7.get_rect(center=(670, 400))
+    skin8_rect = skin8.get_rect(center=(920, 400))
     while running:
 
         screen.blit(background, (0, 0))
@@ -251,6 +268,14 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
                     GameVariables.PLAYER_SKIN = "assets/glock4.png"
                 if skin4_rect.collidepoint(event.pos):
                     GameVariables.PLAYER_SKIN = "assets/glock5.png"
+                if skin5_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
+                if skin6_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
+                if skin7_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
+                if skin8_rect.collidepoint(event.pos):
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
 
 
 
@@ -258,6 +283,11 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(skin2, skin2_rect)
         screen.blit(skin3, skin3_rect)
         screen.blit(skin4, skin4_rect)
+
+        screen.blit(skin5, skin5_rect)
+        screen.blit(skin6, skin6_rect)
+        screen.blit(skin7, skin7_rect)
+        screen.blit(skin8, skin8_rect)
         if GameVariables.PLAYER_SKIN == "assets/glock2.png":
             pygame.draw.rect(surface=screen,rect=(skin1_rect.inflate(10, 10)), color="white", width=3)    # ki für inflate weil schöner
         if GameVariables.PLAYER_SKIN == "assets/glock3.png":
@@ -266,6 +296,14 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen,rect=(skin3_rect.inflate(10, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN == "assets/glock5.png":
             pygame.draw.rect(surface=screen,rect=(skin4_rect.inflate(10, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_1.png":
+            pygame.draw.rect(surface=screen,rect=(skin5_rect.inflate(20, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_2.png":
+            pygame.draw.rect(surface=screen, rect=(skin6_rect.inflate(20, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_3.png":
+            pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
+        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
+            pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
@@ -326,6 +364,7 @@ def main():
 
     while True:
         if GameScreens.actual_screen == GameScreens.MAIN:
+            GameVariables.ENEMYS_KILLED = 0
             screen.fill("black")
             GameScreens.actual_screen = main_screen(screen, clock)
         elif GameScreens.actual_screen == GameScreens.PLAY:

@@ -8,6 +8,7 @@ class GameVariables:
     FPS = 60
 
     PLAYER_SKIN = "assets/glock2.png"
+    PLAYER_SKIN_AK = "assets/ak47_1.png"
     POINTS = 0
     MISSLE_SIZE =  32
     MISSLE_COUNT = 0
