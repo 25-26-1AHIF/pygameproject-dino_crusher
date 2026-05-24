@@ -26,6 +26,7 @@ class Player:
         self.idle_anim.load_spritesheet()
         self.hp = 200
         self.dino_dmg = 40
+        self.dino_dmg_fly = 20
 
         # Run Animation: 6 frames, startet bei Frame 4
         # Gesamte Animation für player mit hochscalieren auf die richtige größe und das teilen der frames weil das bild alle animationen hatte und wir nicht alle wollten mit Claude gemacht
@@ -154,9 +155,9 @@ class Player:
         if dmg == True:
             self.hp -= self.dino_dmg
         if dmg_fly == True:
-            self.hp -= self.dino_dmg
+            self.hp -= self.dino_dmg_fly
         if dmg_fly2 == True:
-            self.hp -= self.dino_dmg
+            self.hp -= self.dino_dmg_fly
 
         if self.x_pos < -10:
             self.hp -= 1

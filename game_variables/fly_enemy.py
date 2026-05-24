@@ -32,11 +32,11 @@ class Fly:
 
 
     def get_rect(self, my_rect):        # chatgpt für !!bessere!! hitboxen verwendet
-        hitbox_width = 16
-        hitbox_height = 96
+        hitbox_width = 48
+        hitbox_height = 48
 
-        hitbox_x = my_rect.x + 90
-        hitbox_y = my_rect.y + 110
+        hitbox_x = my_rect.x
+        hitbox_y = my_rect.y
 
         return pygame.Rect(
                 hitbox_x,
@@ -48,15 +48,15 @@ class Fly:
 
     def update(self, my_rect, player_rect):     # chatgpt für das offset verwendet damit dino über player schwebt
         # berechnugnen ki claude
-        if my_rect.centerx < player_rect.centerx - 60:
+        if my_rect.centerx < player_rect.centerx - 10:
             my_rect.x += self.speed
             self.facing_left = False
             # berechnugnen ki claude
-        elif my_rect.centerx > player_rect.centerx + 60:
+        elif my_rect.centerx > player_rect.centerx + 10:
             my_rect.x -= self.speed
             self.facing_left = True
             # berechnugnen ki claude
-        TARGET_OFFSET = 120
+        TARGET_OFFSET = 50
 
         target_y = player_rect.centery - TARGET_OFFSET
 
@@ -65,8 +65,8 @@ class Fly:
         elif my_rect.centery < target_y:
             my_rect.y += self.speed
             # berechnugnen ki claude
-        self.is_biting_x = my_rect.centerx - 60 <= player_rect.centerx <= my_rect.centerx + 60
-        self.is_biting_y = my_rect.centery - 40 <= player_rect.centery <= my_rect.centery + 40
+        self.is_biting_x = my_rect.centerx - 10 <= player_rect.centerx <= my_rect.centerx + 10
+        self.is_biting_y = my_rect.centery - 10 <= player_rect.centery <= my_rect.centery + 10
         if player_rect.centery <= my_rect.centery:
             self.is_biting_y = True
         else:
@@ -129,7 +129,7 @@ class Fly:
 
             result = False
 
-        scaled = pygame.transform.scale(frame, (96, 96))
+        scaled = pygame.transform.scale(frame, (48, 48))
         if current_frame != 0:
             self.did_damage = False
 

@@ -67,8 +67,8 @@ def play_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     fly = Fly(screen)
     fly2 = Fly(screen)
     raptor_rect = pygame.Rect(900, player.y_pos + GameVariables.SQUARE_SIZE - 200, 400, 200)
-    fly_rect = pygame.Rect(900, 100, 400, 200)
-    fly2_rect = pygame.Rect(0, 100, 400, 200)
+    fly_rect = pygame.Rect(900, 100, 50, 50)
+    fly2_rect = pygame.Rect(0, 100, 50, 50)
     background = pygame.image.load("assets/map.png").convert()
 
     running = True
