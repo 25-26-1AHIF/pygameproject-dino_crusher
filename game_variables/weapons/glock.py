@@ -16,6 +16,8 @@ class Glock:
         self.is_shooting = True
         self.shoot_frame = 0
 
+
+
     def draw(self, screen, x, y, facing_left):
         if self.is_shooting:
             frame = self.gun_anim.images[self.shoot_frame]

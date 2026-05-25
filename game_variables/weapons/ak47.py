@@ -33,3 +33,5 @@ class Ak:
 
         else:
             screen.blit(frame, (x + 10, y + 10))
+
+

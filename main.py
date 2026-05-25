@@ -321,6 +321,8 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
             for high in inhalt:
                 highscores.append(high)
 
+
+
         stoppen = False
         while stoppen == False:
             stoppen = True
@@ -349,6 +351,8 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
 
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
+
+
 
 
 

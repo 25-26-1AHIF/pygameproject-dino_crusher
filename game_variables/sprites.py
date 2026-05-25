@@ -13,6 +13,8 @@ class Sprite:
     def load_spritesheet(self):
         sprite_sheet = pygame.image.load(self.filepath).convert_alpha()
 
+
+
         for image_index in range(self.image_count):
             image_surface = pygame.Surface(self.image_rect.size, pygame.SRCALPHA).convert_alpha()
             image_surface.blit(sprite_sheet, dest=(0, 0),

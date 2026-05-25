@@ -12,6 +12,7 @@ class Missle:
 #
 
 
+
     def get_rect(self) -> pygame.Rect:
         return pygame.Rect(self.xpos, self.ypos, 32, 32)
 

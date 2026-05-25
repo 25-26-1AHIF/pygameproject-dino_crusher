@@ -16,6 +16,8 @@ class GameVariables:
     BULLETS = 0
     MUSIC_TRACK = 1
 #
+
+
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
     FONT_SMALL: pygame.font.Font = None

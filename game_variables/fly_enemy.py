@@ -142,6 +142,7 @@ class Fly:
         if current_frame != 0:
             self.did_damage = False
 #
+
         if self.facing_left:
             scaled = pygame.transform.flip(scaled, True, False)
 
