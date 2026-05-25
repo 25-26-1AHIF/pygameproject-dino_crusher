@@ -29,8 +29,8 @@ class Fly:
         if GameVariables.DIFFICULTY_P == "impossible":
             self.speed = 4
 #
-        self.BITE_RANGE_X = 80
-        self.BITE_RANGE_Y = 40
+        self.BITE_RANGE_X = 20
+        self.BITE_RANGE_Y = 10
         self.did_damage = False
         self.hp_dino_ges = 10
         self.player_dmg = 5
@@ -82,12 +82,15 @@ class Fly:
             self.speed = 3
 
             # berechnugnen ki claude
-        self.is_biting_x = my_rect.centerx - 10 <= player_rect.centerx <= my_rect.centerx + 10
-        self.is_biting_y = my_rect.centery - 10 <= player_rect.centery <= my_rect.centery + 10
-        if player_rect.centery <= my_rect.centery:
-            self.is_biting_y = True
-        else:
-            self.is_biting_y = False
+        self.is_biting_x = (
+                abs(my_rect.centerx - player_rect.centerx)
+                <= self.BITE_RANGE_X
+        )
+                                                                                        # bugfix mit chatgpt gemacht weil enemy von zu weit weg attackiert hat
+        self.is_biting_y = (
+                abs(my_rect.centery - player_rect.centery)
+                <= self.BITE_RANGE_Y
+        )
 
     def respawn(self, my_rect):
         x = random.randint(0, 10)
@@ -112,7 +115,7 @@ class Fly:
 
     def draw(self, screen, x, y, missles: Missles, my_rect):               # für die damage ticks chatgpt verwendet damit es nur True returned und somit damage macht wenn die bite animation im 3 frame ist
 
-        if self.is_biting_x and not self.is_biting_y:
+        if self.is_biting_x and self.is_biting_y:
 
             current_frame = (
                     (self.frame_counter // self.bite_anim.aimation_speed)

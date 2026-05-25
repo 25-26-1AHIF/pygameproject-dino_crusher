@@ -18,7 +18,8 @@ class GameVariables:
     DIFFICULTY_P = "none"
     DIFFICULTY_H = "none"
     DIFFICULTY_PFAD = "none"
-##
+    COINS = 0
+    OWNED_SKINS = ["assets/glock2.png", "assets/ak47_1.png"]
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
     FONT_SMALL: pygame.font.Font = None
@@ -47,5 +48,6 @@ class GameScreens:
     HIGH = "highscores"
     DIFF_P = "difficulty_play"
     DIFF_H = "difficulty_highscore"
+    SHOP = "shop"
     actual_screen = MAIN
 
