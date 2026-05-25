@@ -10,10 +10,10 @@ from game_variables.fly_enemy import Fly
 
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
-    starten_text = GameVariables.FONT_MIDDLE.render("Starten", True, "darkgreen")
+    starten_text = GameVariables.FONT_MIDDLE.render("Start", True, "darkgreen")
     quit_text = GameVariables.FONT_MIDDLE.render("Exit", True, "darkred")
     settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "darkorange")
-    inv_text = GameVariables.FONT_MIDDLE.render("Inventar", True, "gold")
+    inv_text = GameVariables.FONT_MIDDLE.render("Inventory", True, "gold")
     high_text = GameVariables.FONT_MIDDLE.render("Highscores", True, "darkblue")
     shop_text = GameVariables.FONT_MIDDLE.render("Shop", True, "silver")
 
@@ -335,7 +335,7 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
         clock.tick(GameVariables.FPS)
 
 def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
-    hs_text = GameVariables.FONT_BIG.render("Highscores", True, "darkblue")
+    hs_text = GameVariables.FONT_BIG.render("Highscores", True, f"{GameVariables.COLOR}")
     hs_text_rect = hs_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     background = pygame.image.load("assets/background.png").convert()
 
@@ -360,7 +360,7 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
                     stoppen = False
 
         for idx, hs in enumerate(highscores[:5]):
-            highs = GameVariables.FONT_MIDDLE.render(f"{idx+1}.             {hs}", True, "darkblue")
+            highs = GameVariables.FONT_MIDDLE.render(f"{idx+1}.             {hs}", True, f"{GameVariables.COLOR}")
             highs_rect = highs.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200 + idx*100))
             screen.blit(source=highs, dest=highs_rect)
 
@@ -429,7 +429,7 @@ def difficulty_play(screen: pygame.Surface, clock: pygame.time.Clock):
         clock.tick(GameVariables.FPS)
 
 def difficulty_high(screen: pygame.Surface, clock: pygame.time.Clock):
-    diff_text = GameVariables.FONT_BIG.render("choose difficulty", True, "darkblue")
+    diff_text = GameVariables.FONT_BIG.render("Highscores", True, "darkblue")
     easy_text = GameVariables.FONT_MIDDLE.render("easy", True, "darkblue")
     middle_text = GameVariables.FONT_MIDDLE.render("middle", True, "darkblue")
     hard_text = GameVariables.FONT_MIDDLE.render("hard", True, "darkblue")
@@ -457,18 +457,22 @@ def difficulty_high(screen: pygame.Surface, clock: pygame.time.Clock):
                 if easy_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_H = "easy"
                     GameVariables.DIFFICULTY_PFAD = "highscore_easy.json"
+                    GameVariables.COLOR = "darkgreen"
                     return GameScreens.HIGH
                 if middle_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_H = "middle"
                     GameVariables.DIFFICULTY_PFAD = "highscore_middle.json"
+                    GameVariables.COLOR = "gold"
                     return GameScreens.HIGH
                 if hard_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_H = "hard"
                     GameVariables.DIFFICULTY_PFAD = "highscore_hard.json"
+                    GameVariables.COLOR = "darkred"
                     return GameScreens.HIGH
                 if imp_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_H = "impossible"
                     GameVariables.DIFFICULTY_PFAD = "highscore_impossible.json"
+                    GameVariables.COLOR = "purple"
                     return GameScreens.HIGH
 
         screen.blit(source=diff_text, dest=diff_text_rect)

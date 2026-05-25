@@ -28,6 +28,7 @@ class GameVariables:
     FPS_VISIBLE = True
     MAX_BULLETS = 30
     TOLERANCE = 15
+    COLOR = "none"
     @staticmethod
     def init():
         pygame.init()
