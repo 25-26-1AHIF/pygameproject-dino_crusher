@@ -15,6 +15,8 @@ class GameVariables:
     SAVED = False
     BULLETS = 0
     MUSIC_TRACK = 1
+    COINS = 0
+    OWNED_SKINS = ["assets/glock2.png", "assets/ak47_1.png"]
 #
 
 
@@ -44,5 +46,6 @@ class GameScreens:
     DEAD = "dead"
     INV = "inventory"
     HIGH = "highscores"
+    SHOP = "shop"
     actual_screen = MAIN
 
