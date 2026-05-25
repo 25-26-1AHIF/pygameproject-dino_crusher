@@ -343,7 +343,7 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
     while running:
         screen.blit(background, (0, 0))
         highscores = []
-        with open("game_variables/highscore_easy.json", "r") as fp:
+        with open(f"game_variables/{GameVariables.DIFFICULTY_PFAD}", "r") as fp:
             inhalt = json.load(fp)
             for high in inhalt:
                 highscores.append(high)
@@ -404,15 +404,19 @@ def difficulty_play(screen: pygame.Surface, clock: pygame.time.Clock):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_P = "easy"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_easy.json"
                     return GameScreens.PLAY
                 if middle_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_P = "middle"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_middle.json"
                     return GameScreens.PLAY
                 if hard_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_P = "hard"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_hard.json"
                     return GameScreens.PLAY
                 if imp_text_rect.collidepoint(event.pos):
                     GameVariables.DIFFICULTY_P = "impossible"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_impossible.json"
                     return GameScreens.PLAY
 
         screen.blit(source=diff_text, dest=diff_text_rect)
@@ -479,7 +483,8 @@ def difficulty_high(screen: pygame.Surface, clock: pygame.time.Clock):
 
 def save_game():
     with open("game_variables/weapons_coins_save.json", "w") as fp:
-        json.dump({"coins": GameVariables.COINS, "owned_skins": GameVariables.OWNED_SKINS}, fp, indent=2)
+
+         json.dump({"coins": GameVariables.COINS, "owned_skins": GameVariables.OWNED_SKINS}, fp, indent=2)
 
 
 def shop(screen: pygame.Surface, clock: pygame.time.Clock):
@@ -689,12 +694,19 @@ def main():
             break
         elif GameScreens.actual_screen == GameScreens.DEAD:
             if not GameVariables.SAVED:
-                with open("game_variables/highscore_easy.json", "r") as fp:
+                with open(f"game_variables/{GameVariables.DIFFICULTY_PFAD}", "r") as fp:
                     inhalt = json.load(fp)
                     inhalt.append(GameVariables.POINTS)
-                with open("game_variables/highscore_easy.json", "w") as fp:
+                with open(f"game_variables/{GameVariables.DIFFICULTY_PFAD}", "w") as fp:
                     json.dump(inhalt, fp, indent=2)
-                GameVariables.COINS += GameVariables.POINTS
+                if GameVariables.DIFFICULTY_P == "easy":
+                    GameVariables.COINS += GameVariables.POINTS/2
+                if GameVariables.DIFFICULTY_P == "middle":
+                    GameVariables.COINS += GameVariables.POINTS
+                if GameVariables.DIFFICULTY_P == "hard":
+                    GameVariables.COINS += GameVariables.POINTS*1.5
+                if GameVariables.DIFFICULTY_P == "impossible":
+                    GameVariables.COINS += GameVariables.POINTS*2
                 save_game()
                 GameVariables.SAVED = True
 
