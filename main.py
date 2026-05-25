@@ -5,9 +5,6 @@ from game_variables.game_variables import GameScreens
 from game_variables.player import Player
 from game_variables.raptor_enemy import Raptor
 from game_variables.fly_enemy import Fly
-
-
-
 def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     titel_text = GameVariables.FONT_BIG.render("Dino-Crusher", True, "limegreen")
     starten_text = GameVariables.FONT_MIDDLE.render("Starten", True, "darkgreen")
@@ -15,17 +12,13 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     settings_text = GameVariables.FONT_MIDDLE.render("Settings", True, "darkorange")
     inv_text = GameVariables.FONT_MIDDLE.render("Inventar", True, "gold")
     high_text = GameVariables.FONT_MIDDLE.render("Highscores", True, "darkblue")
-    shop_text = GameVariables.FONT_MIDDLE.render("Shop", True, "silver")
-
 
     high_text_rect = high_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
     titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     starten_text_rect = starten_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
-    quit_text_rect = quit_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 680))
+    quit_text_rect = quit_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 600))
     settings_text_rect = settings_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
     inv_text_rect = inv_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
-    shop_text_rect = shop_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 590))
-
     background = pygame.image.load("assets/background.png").convert() #chatgpt für einzeigen von Hintergrund verwendet.
     running = True
 
@@ -49,8 +42,6 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.INV
                 if high_text_rect.collidepoint(event.pos):
                     return GameScreens.HIGH
-                if shop_text_rect.collidepoint(event.pos):
-                    return GameScreens.SHOP
 
 
 
@@ -61,7 +52,6 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         screen.blit(source=settings_text, dest=settings_text_rect)
         screen.blit(source=inv_text, dest=inv_text_rect)
         screen.blit(source=high_text, dest=high_text_rect)
-        screen.blit(source=shop_text, dest=shop_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
     pygame.quit()
@@ -232,7 +222,6 @@ def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
 
 
 def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
-
     running = True
     background = pygame.image.load("assets/background.png").convert()
     skin1 = pygame.image.load("assets/glock2.png").convert_alpha()      # ki für convert alpha verwendet
@@ -252,19 +241,14 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
     skin6 = pygame.image.load("assets/ak47_2.png").convert_alpha()
     skin7 = pygame.image.load("assets/ak47_3.png").convert_alpha()
     skin8 = pygame.image.load("assets/ak47_4.png").convert_alpha()
-    skin9 = pygame.image.load("assets/ak_flipped_transparent.png").convert_alpha()
-
     skin5 = pygame.transform.scale(skin5, (240, 120))
     skin6 = pygame.transform.scale(skin6, (240, 120))
     skin7 = pygame.transform.scale(skin7, (240, 120))
     skin8 = pygame.transform.scale(skin8, (240, 120))
-    skin9 = pygame.transform.scale(skin9, (240, 120))
     skin5_rect = skin5.get_rect(center=(170, 400))
     skin6_rect = skin6.get_rect(center=(420, 400))
     skin7_rect = skin7.get_rect(center=(670, 400))
     skin8_rect = skin8.get_rect(center=(920, 400))
-    skin9_rect = skin9.get_rect(center=(170, 520))
-
     while running:
 
         screen.blit(background, (0, 0))
@@ -279,49 +263,31 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
                 if skin1_rect.collidepoint(event.pos):
                     GameVariables.PLAYER_SKIN = "assets/glock2.png"
                 if skin2_rect.collidepoint(event.pos):
-                    if "assets/glock3.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN = "assets/glock3.png"
+                    GameVariables.PLAYER_SKIN = "assets/glock3.png"
                 if skin3_rect.collidepoint(event.pos):
-                    if "assets/glock4.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN = "assets/glock4.png"
+                    GameVariables.PLAYER_SKIN = "assets/glock4.png"
                 if skin4_rect.collidepoint(event.pos):
-                    if "assets/glock5.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN = "assets/glock5.png"
+                    GameVariables.PLAYER_SKIN = "assets/glock5.png"
                 if skin5_rect.collidepoint(event.pos):
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
                 if skin6_rect.collidepoint(event.pos):
-                    if "assets/ak47_2.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
                 if skin7_rect.collidepoint(event.pos):
-                    if "assets/ak47_3.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
                 if skin8_rect.collidepoint(event.pos):
-                    if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
-                if skin9_rect.collidepoint(event.pos):
-                    if "assets/ak_flipped_transparent.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
+                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
 
 
 
         screen.blit(skin1, skin1_rect)
-        if "assets/glock3.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin2, skin2_rect)
-        if "assets/glock4.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin3, skin3_rect)
-        if "assets/glock5.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin4, skin4_rect)
+        screen.blit(skin2, skin2_rect)
+        screen.blit(skin3, skin3_rect)
+        screen.blit(skin4, skin4_rect)
 
         screen.blit(skin5, skin5_rect)
-        if "assets/ak47_2.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin6, skin6_rect)
-        if "assets/ak47_3.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin7, skin7_rect)
-        if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin8, skin8_rect)
-        if "assets/ak_flipped_transparent.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin9, skin9_rect)
-
+        screen.blit(skin6, skin6_rect)
+        screen.blit(skin7, skin7_rect)
+        screen.blit(skin8, skin8_rect)
         if GameVariables.PLAYER_SKIN == "assets/glock2.png":
             pygame.draw.rect(surface=screen,rect=(skin1_rect.inflate(10, 10)), color="white", width=3)    # ki für inflate weil schöner
         if GameVariables.PLAYER_SKIN == "assets/glock3.png":
@@ -338,8 +304,6 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
             pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
-            pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
@@ -386,211 +350,13 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
-def save_game():
-    with open("game_variables/weapons_coins_save.json", "w") as fp:
-        json.dump({"coins": GameVariables.COINS, "owned_skins": GameVariables.OWNED_SKINS}, fp, indent=2)
-
-
-def shop(screen: pygame.Surface, clock: pygame.time.Clock):
-    coins_text = GameVariables.FONT_SMALL.render(f"Coins: {GameVariables.COINS}", True, "gold")
-    coins_rect = coins_text.get_rect(center=(GameVariables.SCREEN_WIDTH - 75, 10))
-
-    prize1 = GameVariables.FONT_SMALL.render("500", True, "gold")
-    prize2 = GameVariables.FONT_SMALL.render("1000", True, "gold")
-    prize3 = GameVariables.FONT_SMALL.render("2000", True, "gold")
-    prize5 = GameVariables.FONT_SMALL.render("12000", True, "gold")
-    prize6 = GameVariables.FONT_SMALL.render("18000", True, "gold")
-    prize7 = GameVariables.FONT_SMALL.render("25000", True, "gold")
-    prize8 = GameVariables.FONT_SMALL.render("30000", True, "gold")
-
-
-    prize1_rect = prize1.get_rect(center=(450, 275))
-    prize2_rect = prize2.get_rect(center=(700, 275))
-    prize3_rect = prize3.get_rect(center=(950, 275))
-    prize5_rect = prize5.get_rect(center=(420, 475))
-    prize6_rect = prize6.get_rect(center=(670, 475))
-    prize7_rect = prize7.get_rect(center=(920, 475))
-    prize8_rect = prize8.get_rect(center=(170, 675))
-
-
-
-    running = True
-    background = pygame.image.load("assets/background.png").convert()
-    skin1 = pygame.image.load("assets/glock2.png").convert_alpha()      # ki für convert alpha verwendet
-    skin2 = pygame.image.load("assets/glock3.png").convert_alpha()
-    skin3 = pygame.image.load("assets/glock4.png").convert_alpha()
-    skin4 = pygame.image.load("assets/glock5.png").convert_alpha()
-    skin1 = pygame.transform.scale(skin1, (120, 120))
-    skin2 = pygame.transform.scale(skin2, (120, 120))       # google verwendet wie man das bild skaliert
-    skin3 = pygame.transform.scale(skin3, (120, 120))
-    skin4 = pygame.transform.scale(skin4, (120, 120))
-    skin1_rect = skin1.get_rect(center=(200, 200))
-    skin2_rect = skin2.get_rect(center=(450, 200))
-    skin3_rect = skin3.get_rect(center=(700, 200))
-    skin4_rect = skin4.get_rect(center=(950, 200))
-
-    skin5 = pygame.image.load("assets/ak47_1.png").convert_alpha()
-    skin6 = pygame.image.load("assets/ak47_2.png").convert_alpha()
-    skin7 = pygame.image.load("assets/ak47_3.png").convert_alpha()
-    skin8 = pygame.image.load("assets/ak47_4.png").convert_alpha()
-    skin9 = pygame.image.load("assets/ak_flipped_transparent.png").convert_alpha()
-
-    skin5 = pygame.transform.scale(skin5, (240, 120))
-    skin6 = pygame.transform.scale(skin6, (240, 120))
-    skin7 = pygame.transform.scale(skin7, (240, 120))
-    skin8 = pygame.transform.scale(skin8, (240, 120))
-    skin9 = pygame.transform.scale(skin9, (240, 120))
-    skin5_rect = skin5.get_rect(center=(170, 400))
-    skin6_rect = skin6.get_rect(center=(420, 400))
-    skin7_rect = skin7.get_rect(center=(670, 400))
-    skin8_rect = skin8.get_rect(center=(920, 400))
-    skin9_rect = skin9.get_rect(center=(170, 600))
-
-
-
-
-
-    while running:
-
-        screen.blit(background, (0, 0))
-        for event in pygame.event.get():
-
-            if event.type == pygame.QUIT:
-                return GameScreens.EXIT
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    return GameScreens.MAIN
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if skin1_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock2.png"
-                if skin2_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock3.png"
-                if skin3_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock4.png"
-                if skin4_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock5.png"
-                if skin5_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
-                if skin6_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
-                if skin7_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
-                if skin8_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
-                if skin9_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
-
-                if prize1_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 500 and "assets/glock3.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 500
-                        GameVariables.OWNED_SKINS.append("assets/glock3.png")
-                        save_game()
-                if prize2_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 1000 and "assets/glock4.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 1000
-                        GameVariables.OWNED_SKINS.append("assets/glock4.png")
-                        save_game()
-                if prize3_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 2000 and "assets/glock5.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 2000
-                        GameVariables.OWNED_SKINS.append("assets/glock5.png")
-                        save_game()
-                if prize5_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 12000 and "assets/ak47_3.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 12000
-                        GameVariables.OWNED_SKINS.append("assets/ak47_3.png")
-                        save_game()
-                if prize6_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 18000 and "assets/ak47_4.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 18000
-                        GameVariables.OWNED_SKINS.append("assets/ak47_4.png")
-                        save_game()
-                if prize7_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 25000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 25000
-                        GameVariables.OWNED_SKINS.append("assets/ak_flipped_transparent.png")
-                        save_game()
-                if prize8_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 30000 and "assets/ak_skin_flipped.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 30000
-                        GameVariables.OWNED_SKINS.append("assets/ak_skin_flipped.png")
-                        save_game()
-
-
-        coins_text = GameVariables.FONT_SMALL.render(f"Coins: {GameVariables.COINS}", True, "gold")
-        coins_rect = coins_text.get_rect(center=(GameVariables.SCREEN_WIDTH - 75, 10))
-
-
-        def prize_color(price, skin_path): # claude für kürzere version
-            if skin_path in GameVariables.OWNED_SKINS:
-                return "limegreen"
-            elif GameVariables.COINS >= price:
-                return "gold"
-            else:
-                return "red"
-
-        prize1 = GameVariables.FONT_SMALL.render("500", True, prize_color(500, "assets/glock3.png"))
-        prize2 = GameVariables.FONT_SMALL.render("1000", True, prize_color(1000, "assets/glock4.png"))
-        prize3 = GameVariables.FONT_SMALL.render("2000", True, prize_color(2000, "assets/glock5.png"))
-        prize5 = GameVariables.FONT_SMALL.render("12000", True, prize_color(12000, "assets/ak47_3.png"))
-        prize6 = GameVariables.FONT_SMALL.render("18000", True, prize_color(18000, "assets/ak47_4.png"))
-        prize7 = GameVariables.FONT_SMALL.render("25000", True, prize_color(25000, "assets/ak_flipped_transparent.png"))
-        prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_skin_flipped.png"))
-
-        screen.blit(skin1, skin1_rect)
-        screen.blit(skin2, skin2_rect)
-        screen.blit(skin3, skin3_rect)
-        screen.blit(skin4, skin4_rect)
-
-        screen.blit(skin5, skin5_rect)
-        screen.blit(skin6, skin6_rect)
-        screen.blit(skin7, skin7_rect)
-        screen.blit(skin8, skin8_rect)
-        screen.blit(skin9, skin9_rect)
-
-        screen.blit(prize1, prize1_rect)
-        screen.blit(prize2, prize2_rect)
-        screen.blit(prize3, prize3_rect)
-        screen.blit(prize5, prize5_rect)
-        screen.blit(prize6, prize6_rect)
-        screen.blit(prize7, prize7_rect)
-        screen.blit(prize8, prize8_rect)
-
-        screen.blit(coins_text, coins_rect)
-
-        if GameVariables.PLAYER_SKIN == "assets/glock2.png":
-            pygame.draw.rect(surface=screen,rect=(skin1_rect.inflate(10, 10)), color="white", width=3)    # ki für inflate weil schöner
-        if GameVariables.PLAYER_SKIN == "assets/glock3.png":
-            pygame.draw.rect(surface=screen, rect=(skin2_rect.inflate(10, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN == "assets/glock4.png":
-            pygame.draw.rect(surface=screen,rect=(skin3_rect.inflate(10, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN == "assets/glock5.png":
-            pygame.draw.rect(surface=screen,rect=(skin4_rect.inflate(10, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_1.png":
-            pygame.draw.rect(surface=screen,rect=(skin5_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_2.png":
-            pygame.draw.rect(surface=screen, rect=(skin6_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_3.png":
-            pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
-            pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
-            pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
-        pygame.display.flip()
-        clock.tick(GameVariables.FPS)
-
 
 
 
 def main():
     GameVariables.init()
 
-    with open("game_variables/weapons_coins_save.json", "r") as fp:
-        save_data = json.load(fp)
-    GameVariables.COINS = save_data["coins"]
-    GameVariables.OWNED_SKINS = save_data["owned_skins"]
-
-    pygame.display.set_caption("Dino Crusher")
+    pygame.display.set_caption("Hello ")
     screen = pygame.display.set_mode((GameVariables.SCREEN_WIDTH, GameVariables.SCREEN_HEIGHT))
 
     clock = pygame.time.Clock()
@@ -615,8 +381,6 @@ def main():
                     inhalt.append(GameVariables.POINTS)
                 with open("game_variables/highscore.json", "w") as fp:
                     json.dump(inhalt, fp, indent=2)
-                GameVariables.COINS += GameVariables.POINTS
-                save_game()
                 GameVariables.SAVED = True
 
             GameScreens.actual_screen = dead_screen(screen, clock, GameVariables.POINTS)
@@ -626,8 +390,6 @@ def main():
             GameScreens.actual_screen = inventar(screen, clock)
         elif GameScreens.actual_screen == GameScreens.HIGH:
             GameScreens.actual_screen = highscore(screen, clock)
-        elif GameScreens.actual_screen == GameScreens.SHOP:
-            GameScreens.actual_screen = shop(screen, clock)
 
     pygame.quit()
 

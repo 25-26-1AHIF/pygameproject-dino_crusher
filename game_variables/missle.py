@@ -35,10 +35,16 @@ class Missles:
         self.missles.append(missle)
 
     def update_and_draw(self):
-        for idx, missle in  enumerate(reversed(self.missles)):
+        for missle in self.missles[:]:      # habe manchmal error bekommen weil index nicht existiert deshal hat chatgpt gesagt ich soll for missle in self.missles[:]: machen um kopie zu erstellen
             missle.update_and_draw()
 
-            if missle.ypos <=  0 - 32:
-                self.missles.pop(len(self.missles) - idx - 1)
-            if missle.ypos >=  720 + 32:
-                self.missles.pop(len(self.missles) - idx - 1)
+            if missle.ypos <= -32:
+                self.missles.remove(missle)
+
+            elif missle.ypos >= 720 + 32:
+                self.missles.remove(missle)
+            elif missle.xpos <= -32:
+                self.missles.remove(missle)
+
+            elif missle.xpos >= 1280 + 32:
+                self.missles.remove(missle)
