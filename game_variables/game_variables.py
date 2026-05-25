@@ -15,6 +15,9 @@ class GameVariables:
     SAVED = False
     BULLETS = 0
     MUSIC_TRACK = 1
+    DIFFICULTY_P = "none"
+    DIFFICULTY_H = "none"
+    DIFFICULTY_PFAD = "none"
 #
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
@@ -42,5 +45,7 @@ class GameScreens:
     DEAD = "dead"
     INV = "inventory"
     HIGH = "highscores"
+    DIFF_P = "difficulty_play"
+    DIFF_H = "difficulty_highscore"
     actual_screen = MAIN
 

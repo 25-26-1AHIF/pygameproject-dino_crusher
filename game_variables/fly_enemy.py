@@ -20,7 +20,15 @@ class Fly:
         self.is_biting_y = False
         self.frame_counter = 0
         self.facing_left = False
-        self.speed = 3
+        if GameVariables.DIFFICULTY_P == "easy":
+            self.speed = 1
+        if GameVariables.DIFFICULTY_P == "middle":
+            self.speed = 2
+        if GameVariables.DIFFICULTY_P == "hard":
+            self.speed = 3
+        if GameVariables.DIFFICULTY_P == "impossible":
+            self.speed = 4
+
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
         self.did_damage = False
@@ -64,6 +72,15 @@ class Fly:
             my_rect.y -= self.speed
         elif my_rect.centery < target_y:
             my_rect.y += self.speed
+        if player_rect.centery <= 460 and GameVariables.DIFFICULTY_P == "impossible":
+            self.speed = 6
+        if player_rect.centery <= 460 and GameVariables.DIFFICULTY_P == "hard":
+            self.speed = 4
+        if player_rect.centery > 460 and GameVariables.DIFFICULTY_P == "impossible":
+            self.speed = 4
+        if player_rect.centery > 460 and GameVariables.DIFFICULTY_P == "hard":
+            self.speed = 3
+
             # berechnugnen ki claude
         self.is_biting_x = my_rect.centerx - 10 <= player_rect.centerx <= my_rect.centerx + 10
         self.is_biting_y = my_rect.centery - 10 <= player_rect.centery <= my_rect.centery + 10
@@ -83,19 +100,10 @@ class Fly:
         self.counter += 1
         if self.counter == 10:
             self.speed += 1
-        if self.counter == 20:
+        if self.counter == 15:
             self.speed += 1
         if self.counter == 30:
-            self.speed += 1
             self.hp_dino_ges += 5
-        if self.counter == 40:
-            self.speed += 1
-            self.hp_dino_ges += 5
-        if self.counter == 50:
-            self.speed += 1
-        if self.counter == 60:
-            self.speed += 1
-        if self.counter == 70:
             self.speed += 1
         self.points_fly += 10
         GameVariables.ENEMYS_KILLED += 1

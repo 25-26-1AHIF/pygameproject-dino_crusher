@@ -33,7 +33,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.EXIT
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if starten_text_rect.collidepoint(event.pos):
-                    return GameScreens.PLAY
+                    return GameScreens.DIFF_P
                 if quit_text_rect.collidepoint(event.pos):
                     return GameScreens.EXIT
                 if settings_text_rect.collidepoint(event.pos):
@@ -41,7 +41,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                 if inv_text_rect.collidepoint(event.pos):
                     return GameScreens.INV
                 if high_text_rect.collidepoint(event.pos):
-                    return GameScreens.HIGH
+                    return GameScreens.DIFF_H
 
 
 
@@ -316,7 +316,7 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
     while running:
         screen.blit(background, (0, 0))
         highscores = []
-        with open("game_variables/highscore.json", "r") as fp:
+        with open("game_variables/highscore_easy.json", "r") as fp:
             inhalt = json.load(fp)
             for high in inhalt:
                 highscores.append(high)
@@ -343,14 +343,114 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
                 return GameScreens.EXIT
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return GameScreens.MAIN
+                    return GameScreens.DIFF_H
         screen.blit(source=hs_text, dest=hs_text_rect)
 
 
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
+def difficulty_play(screen: pygame.Surface, clock: pygame.time.Clock):
+    diff_text = GameVariables.FONT_BIG.render("choose difficulty", True, "limegreen")
+    easy_text = GameVariables.FONT_MIDDLE.render("easy", True, "darkgreen")
+    middle_text = GameVariables.FONT_MIDDLE.render("middle", True, "gold")
+    hard_text = GameVariables.FONT_MIDDLE.render("hard", True, "darkred")
+    imp_text = GameVariables.FONT_MIDDLE.render("impossible", True, "purple")
+    diff_text_rect = diff_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    easy_text_rect = easy_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    middle_text_rect = middle_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
+    hard_text_rect = hard_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    imp_text_rect = imp_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
+    background = pygame.image.load("assets/background.png").convert()
 
+    running = True
+    while running:
+        screen.blit(background, (0, 0))
+        stoppen = False
+        while stoppen == False:
+            stoppen = True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if easy_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_P = "easy"
+                    return GameScreens.PLAY
+                if middle_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_P = "middle"
+                    return GameScreens.PLAY
+                if hard_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_P = "hard"
+                    return GameScreens.PLAY
+                if imp_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_P = "impossible"
+                    return GameScreens.PLAY
+
+
+        screen.blit(source=diff_text, dest=diff_text_rect)
+        screen.blit(source=easy_text, dest=easy_text_rect)
+        screen.blit(source=middle_text, dest=middle_text_rect)
+        screen.blit(source=hard_text, dest=hard_text_rect)
+        screen.blit(source=imp_text, dest=imp_text_rect)
+
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
+
+def difficulty_high(screen: pygame.Surface, clock: pygame.time.Clock):
+    diff_text = GameVariables.FONT_BIG.render("choose difficulty", True, "darkblue")
+    easy_text = GameVariables.FONT_MIDDLE.render("easy", True, "darkblue")
+    middle_text = GameVariables.FONT_MIDDLE.render("middle", True, "darkblue")
+    hard_text = GameVariables.FONT_MIDDLE.render("hard", True, "darkblue")
+    imp_text = GameVariables.FONT_MIDDLE.render("impossible", True, "darkblue")
+    diff_text_rect = diff_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    easy_text_rect = easy_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    middle_text_rect = middle_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
+    hard_text_rect = hard_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    imp_text_rect = imp_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
+    background = pygame.image.load("assets/background.png").convert()
+
+    running = True
+    while running:
+        screen.blit(background, (0, 0))
+        stoppen = False
+        while stoppen == False:
+            stoppen = True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if easy_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_H = "easy"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_easy.json"
+                    return GameScreens.HIGH
+                if middle_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_H = "middle"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_middle.json"
+                    return GameScreens.HIGH
+                if hard_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_H = "hard"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_hard.json"
+                    return GameScreens.HIGH
+                if imp_text_rect.collidepoint(event.pos):
+                    GameVariables.DIFFICULTY_H = "impossible"
+                    GameVariables.DIFFICULTY_PFAD = "highscore_impossible.json"
+                    return GameScreens.HIGH
+
+
+        screen.blit(source=diff_text, dest=diff_text_rect)
+        screen.blit(source=easy_text, dest=easy_text_rect)
+        screen.blit(source=middle_text, dest=middle_text_rect)
+        screen.blit(source=hard_text, dest=hard_text_rect)
+        screen.blit(source=imp_text, dest=imp_text_rect)
+
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
 
 
 def main():
@@ -376,10 +476,10 @@ def main():
             break
         elif GameScreens.actual_screen == GameScreens.DEAD:
             if not GameVariables.SAVED:
-                with open("game_variables/highscore.json", "r") as fp:
+                with open("game_variables/highscore_easy.json", "r") as fp:
                     inhalt = json.load(fp)
                     inhalt.append(GameVariables.POINTS)
-                with open("game_variables/highscore.json", "w") as fp:
+                with open("game_variables/highscore_easy.json", "w") as fp:
                     json.dump(inhalt, fp, indent=2)
                 GameVariables.SAVED = True
 
@@ -390,6 +490,10 @@ def main():
             GameScreens.actual_screen = inventar(screen, clock)
         elif GameScreens.actual_screen == GameScreens.HIGH:
             GameScreens.actual_screen = highscore(screen, clock)
+        elif GameScreens.actual_screen == GameScreens.DIFF_P:
+            GameScreens.actual_screen = difficulty_play(screen, clock)
+        elif GameScreens.actual_screen == GameScreens.DIFF_H:
+            GameScreens.actual_screen = difficulty_high(screen, clock)
 
     pygame.quit()
 

@@ -20,7 +20,14 @@ class Raptor:
         self.is_biting_y = False
         self.frame_counter = 0
         self.facing_left = False
-        self.speed = 6
+        if GameVariables.DIFFICULTY_P == "easy":
+            self.speed = 3
+        if GameVariables.DIFFICULTY_P == "middle":
+            self.speed = 4
+        if GameVariables.DIFFICULTY_P == "hard":
+            self.speed = 6
+        if GameVariables.DIFFICULTY_P == "impossible":
+            self.speed = 8
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
         self.did_damage = False
@@ -70,13 +77,11 @@ class Raptor:
         self.counter += 1
         if self.counter == 10:
             self.speed += 1
-        if self.counter == 20:
+        if self.counter == 15:
             self.speed += 1
         if self.counter == 30:
             self.hp_dino_ges += 5
-        if self.counter == 40:
             self.speed += 1
-            self.hp_dino_ges += 5
         self.points_raptor += 10
         GameVariables.ENEMYS_KILLED += 1
         return self.points_raptor
