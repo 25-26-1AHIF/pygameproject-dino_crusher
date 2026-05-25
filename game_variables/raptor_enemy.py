@@ -36,7 +36,7 @@ class Raptor:
         self.counter = 0
         self.hp_dino = self.hp_dino_ges
         self.points_raptor = 0
-
+#
     def get_rect(self, my_rect):        # chatgpt für !!bessere!! hitboxen verwendet
         hitbox_width = 220
         hitbox_height = 70

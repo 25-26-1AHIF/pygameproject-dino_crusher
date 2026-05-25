@@ -28,7 +28,7 @@ class Fly:
             self.speed = 3
         if GameVariables.DIFFICULTY_P == "impossible":
             self.speed = 4
-
+#
         self.BITE_RANGE_X = 80
         self.BITE_RANGE_Y = 40
         self.did_damage = False

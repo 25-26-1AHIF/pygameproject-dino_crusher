@@ -18,7 +18,7 @@ class GameVariables:
     DIFFICULTY_P = "none"
     DIFFICULTY_H = "none"
     DIFFICULTY_PFAD = "none"
-#
+##
     FONT_BIG: pygame.font.Font = None
     FONT_MIDDLE: pygame.font.Font = None
     FONT_SMALL: pygame.font.Font = None

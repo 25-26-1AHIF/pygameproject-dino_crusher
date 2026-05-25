@@ -9,7 +9,7 @@ from game_variables.game_variables import GameScreens
 from game_variables.sprites import Sprite
 from game_variables.weapons.glock import Glock
 from game_variables.weapons.ak47 import Ak
-
+#
 class Player:
     def __init__(self, screen, pfad):
         self.screen = screen

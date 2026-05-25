@@ -7,7 +7,7 @@ class Ak:
 
     def __init__(self):
 #
-
+#
         self.gun_anim = Sprite(GameVariables.PLAYER_SKIN_AK,
                                2, pygame.Rect(0, 0, 64, 48), 0)
         self.gun_anim.load_spritesheet()

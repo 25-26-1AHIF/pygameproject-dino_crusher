@@ -320,7 +320,7 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
             inhalt = json.load(fp)
             for high in inhalt:
                 highscores.append(high)
-
+#
         stoppen = False
         while stoppen == False:
             stoppen = True

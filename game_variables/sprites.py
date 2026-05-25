@@ -19,7 +19,7 @@ class Sprite:
                                area=pygame.Rect((self.start_frame + image_index) * self.image_rect.width, self.image_rect.y, # claude: start_frame * width verschiebt den startpunkt im sheet
                                                 self.image_rect.width, self.image_rect.height))
             self.images.append(image_surface)
-
+#
     def draw(self, screen: pygame.Surface, xpos: float, ypos: float, frame_counter: int, scale: int = None):
         frame = self.images[(frame_counter // self.aimation_speed) % self.image_count]
         if scale:
