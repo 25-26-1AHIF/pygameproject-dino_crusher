@@ -72,6 +72,8 @@ class Raptor:
         x = random.randint(0, 10)
         if x <= 5:
             my_rect.centerx = random.randint(1100, 1200)
+
+
         if x > 5:
             my_rect.centerx = random.randint(-120, -20)
         self.counter += 1

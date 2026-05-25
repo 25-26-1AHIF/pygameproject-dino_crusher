@@ -81,6 +81,8 @@ class Player:
             self.ak.draw(self.screen, self.x_pos, self.y_pos,self.facing_left)
 
 
+
+
     def shoot(self, mx, my):
         current_time = pygame.time.get_ticks()
 
