@@ -141,15 +141,16 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     song1_text = GameVariables.FONT_MIDDLE.render("Song: Expeditionary", True, "white")
     song2_text = GameVariables.FONT_MIDDLE.render("Song: Strength of the Titans", True, "white")
     song3_text = GameVariables.FONT_MIDDLE.render("Song: Linked", True, "white")
-
+    setting_text = GameVariables.FONT_BIG.render("Settings", True, "orange")
     settings_screen = pygame.image.load(
         "assets/background.png").convert()  # chatgpt für einzeigen von Hintergrund verwendet.
 
-    fps_on_rect = fps_on.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
-    fps_off_rect = fps_off.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
-    song1_rect = song1_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
-    song2_rect = song2_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 280))
-    song3_rect = song3_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 360))
+    fps_on_rect = fps_on.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    fps_off_rect = fps_off.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    song1_rect = song1_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
+    song2_rect = song2_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    song3_rect = song3_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
+    setting_rect = setting_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
 
     running = True
     while running:
@@ -198,6 +199,7 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         screen.blit(song1_text, song1_rect)
         screen.blit(song2_text, song2_rect)
         screen.blit(song3_text, song3_rect)
+        screen.blit(source=setting_text, dest=setting_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
@@ -240,6 +242,8 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
     skin2_rect = skin2.get_rect(center=(450, 200))
     skin3_rect = skin3.get_rect(center=(700, 200))
     skin4_rect = skin4.get_rect(center=(950, 200))
+    inv_text = GameVariables.FONT_BIG.render("Inventory", True, "gold")
+    inv_text_rect = inv_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
 
     skin5 = pygame.image.load("assets/ak47_1.png").convert_alpha()
     skin6 = pygame.image.load("assets/ak47_2.png").convert_alpha()
@@ -331,6 +335,7 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
             pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
+        screen.blit(source=inv_text, dest=inv_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
 
@@ -377,11 +382,11 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
 
 
 def difficulty_play(screen: pygame.Surface, clock: pygame.time.Clock):
-    diff_text = GameVariables.FONT_BIG.render("choose difficulty", True, "limegreen")
-    easy_text = GameVariables.FONT_MIDDLE.render("easy", True, "darkgreen")
-    middle_text = GameVariables.FONT_MIDDLE.render("middle", True, "gold")
-    hard_text = GameVariables.FONT_MIDDLE.render("hard", True, "darkred")
-    imp_text = GameVariables.FONT_MIDDLE.render("impossible", True, "purple")
+    diff_text = GameVariables.FONT_BIG.render("Choose difficulty", True, "limegreen")
+    easy_text = GameVariables.FONT_MIDDLE.render("Easy", True, "darkgreen")
+    middle_text = GameVariables.FONT_MIDDLE.render("Middle", True, "gold")
+    hard_text = GameVariables.FONT_MIDDLE.render("Hard", True, "darkred")
+    imp_text = GameVariables.FONT_MIDDLE.render("Impossible", True, "purple")
     diff_text_rect = diff_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     easy_text_rect = easy_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
     middle_text_rect = middle_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
@@ -430,10 +435,10 @@ def difficulty_play(screen: pygame.Surface, clock: pygame.time.Clock):
 
 def difficulty_high(screen: pygame.Surface, clock: pygame.time.Clock):
     diff_text = GameVariables.FONT_BIG.render("Highscores", True, "darkblue")
-    easy_text = GameVariables.FONT_MIDDLE.render("easy", True, "darkblue")
-    middle_text = GameVariables.FONT_MIDDLE.render("middle", True, "darkblue")
-    hard_text = GameVariables.FONT_MIDDLE.render("hard", True, "darkblue")
-    imp_text = GameVariables.FONT_MIDDLE.render("impossible", True, "darkblue")
+    easy_text = GameVariables.FONT_MIDDLE.render("Easy", True, "darkgreen")
+    middle_text = GameVariables.FONT_MIDDLE.render("Middle", True, "gold")
+    hard_text = GameVariables.FONT_MIDDLE.render("Hard", True, "darkred")
+    imp_text = GameVariables.FONT_MIDDLE.render("Impossible", True, "purple")
     diff_text_rect = diff_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     easy_text_rect = easy_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
     middle_text_rect = middle_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
@@ -499,7 +504,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     prize6 = GameVariables.FONT_SMALL.render("18000", True, "gold")
     prize7 = GameVariables.FONT_SMALL.render("25000", True, "gold")
     prize8 = GameVariables.FONT_SMALL.render("30000", True, "gold")
-
+    shop = GameVariables.FONT_BIG.render("Shop", True, "silver")
     prize1_rect = prize1.get_rect(center=(450, 275))
     prize2_rect = prize2.get_rect(center=(700, 275))
     prize3_rect = prize3.get_rect(center=(950, 275))
@@ -507,7 +512,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     prize6_rect = prize6.get_rect(center=(670, 475))
     prize7_rect = prize7.get_rect(center=(920, 475))
     prize8_rect = prize8.get_rect(center=(170, 675))
-
+    shop_rect = shop.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     running = True
     background = pygame.image.load("assets/background.png").convert()
     skin1 = pygame.image.load("assets/glock2.png").convert_alpha()
@@ -645,7 +650,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(prize6, prize6_rect)
         screen.blit(prize7, prize7_rect)
         screen.blit(prize8, prize8_rect)
-
+        screen.blit(source=shop, dest=shop_rect)
         screen.blit(coins_text, coins_rect)
 
         if GameVariables.PLAYER_SKIN == "assets/glock2.png":
