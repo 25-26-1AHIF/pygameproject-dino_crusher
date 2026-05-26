@@ -1,5 +1,4 @@
 import random
-
 import pygame
 from game_variables.sprites import Sprite as SpriteSheet
 from game_variables.player import Player
@@ -39,7 +38,7 @@ class Fly:
         self.points_fly = 0
 
 
-    def get_rect(self, my_rect):        # chatgpt für !!bessere!! hitboxen verwendet
+    def get_rect(self, my_rect):
         hitbox_width = 48
         hitbox_height = 48
 
@@ -54,7 +53,7 @@ class Fly:
             )
 
 
-    def update(self, my_rect, player_rect):     # chatgpt für das offset verwendet damit dino über player schwebt
+    def update(self, my_rect, player_rect):
         # berechnugnen ki claude
         if my_rect.centerx < player_rect.centerx - 10:
             my_rect.x += self.speed
@@ -110,7 +109,7 @@ class Fly:
 
 
 
-    def draw(self, screen, x, y, missles: Missles, my_rect):               # für die damage ticks chatgpt verwendet damit es nur True returned und somit damage macht wenn die bite animation im 3 frame ist
+    def draw(self, screen, x, y, missles: Missles, my_rect):
 
         if self.is_biting_x and not self.is_biting_y:
 

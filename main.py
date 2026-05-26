@@ -556,24 +556,24 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
                 if event.key == pygame.K_ESCAPE:
                     return GameScreens.MAIN
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if skin1_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock2.png"
-                if skin2_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock3.png"
-                if skin3_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock4.png"
-                if skin4_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN = "assets/glock5.png"
-                if skin5_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
-                if skin6_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
-                if skin7_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
+                #if skin1_rect.collidepoint(event.pos):
+                 #   GameVariables.PLAYER_SKIN = "assets/glock2.png"
+                #if skin2_rect.collidepoint(event.pos):
+                #    GameVariables.PLAYER_SKIN = "assets/glock3.png"
+                #if skin3_rect.collidepoint(event.pos):
+                #    GameVariables.PLAYER_SKIN = "assets/glock4.png"
+                #if skin4_rect.collidepoint(event.pos):
+                #    GameVariables.PLAYER_SKIN = "assets/glock5.png"
+                #if skin5_rect.collidepoint(event.pos):
+              #      GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
+               # if skin6_rect.collidepoint(event.pos):
+               #     GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
+               # if skin7_rect.collidepoint(event.pos):
+               #     GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
                 #if skin8_rect.collidepoint(event.pos):
                  #   GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
-                if skin9_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
+               # if skin9_rect.collidepoint(event.pos):
+                #    GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
 
                 if prize1_rect.collidepoint(event.pos):
                     if GameVariables.COINS >= 500 and "assets/glock3.png" not in GameVariables.OWNED_SKINS:
