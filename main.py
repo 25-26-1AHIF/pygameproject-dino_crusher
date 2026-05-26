@@ -259,8 +259,8 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
     skin5_rect = skin5.get_rect(center=(170, 400))
     skin6_rect = skin6.get_rect(center=(420, 400))
     skin7_rect = skin7.get_rect(center=(670, 400))
-    skin8_rect = skin8.get_rect(center=(920, 400))
-    skin9_rect = skin9.get_rect(center=(170, 520))
+    #skin8_rect = skin8.get_rect(center=(920, 400))
+    skin9_rect = skin9.get_rect(center=(920, 400))
 
     while running:
 
@@ -292,9 +292,9 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
                 if skin7_rect.collidepoint(event.pos):
                     if "assets/ak47_3.png" in GameVariables.OWNED_SKINS:
                         GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
-                if skin8_rect.collidepoint(event.pos):
-                    if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
-                        GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
+                #if skin8_rect.collidepoint(event.pos):
+                 #   if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
+                  #      GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
                 if skin9_rect.collidepoint(event.pos):
                     if "assets/ak_flipped_transparent.png" in GameVariables.OWNED_SKINS:
                         GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
@@ -312,8 +312,8 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
             screen.blit(skin6, skin6_rect)
         if "assets/ak47_3.png" in GameVariables.OWNED_SKINS:
             screen.blit(skin7, skin7_rect)
-        if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
-            screen.blit(skin8, skin8_rect)
+        #if "assets/ak47_4.png" in GameVariables.OWNED_SKINS:
+         #   screen.blit(skin8, skin8_rect)
         if "assets/ak_flipped_transparent.png" in GameVariables.OWNED_SKINS:
             screen.blit(skin9, skin9_rect)
 
@@ -331,8 +331,8 @@ def inventar(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen, rect=(skin6_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak47_3.png":
             pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
-            pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
+        #if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
+         #   pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
             pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
         screen.blit(source=inv_text, dest=inv_text_rect)
@@ -502,7 +502,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     prize3 = GameVariables.FONT_SMALL.render("2000", True, "gold")
     prize5 = GameVariables.FONT_SMALL.render("12000", True, "gold")
     prize6 = GameVariables.FONT_SMALL.render("18000", True, "gold")
-    prize7 = GameVariables.FONT_SMALL.render("25000", True, "gold")
+#    prize7 = GameVariables.FONT_SMALL.render("25000", True, "gold")
     prize8 = GameVariables.FONT_SMALL.render("30000", True, "gold")
     shop = GameVariables.FONT_BIG.render("Shop", True, "silver")
     prize1_rect = prize1.get_rect(center=(450, 275))
@@ -510,8 +510,8 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     prize3_rect = prize3.get_rect(center=(950, 275))
     prize5_rect = prize5.get_rect(center=(420, 475))
     prize6_rect = prize6.get_rect(center=(670, 475))
-    prize7_rect = prize7.get_rect(center=(920, 475))
-    prize8_rect = prize8.get_rect(center=(170, 675))
+    #prize7_rect = prize7.get_rect(center=(920, 475))
+    prize8_rect = prize8.get_rect(center=(920, 475))
     shop_rect = shop.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     running = True
     background = pygame.image.load("assets/background.png").convert()
@@ -542,8 +542,8 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     skin5_rect = skin5.get_rect(center=(170, 400))
     skin6_rect = skin6.get_rect(center=(420, 400))
     skin7_rect = skin7.get_rect(center=(670, 400))
-    skin8_rect = skin8.get_rect(center=(920, 400))
-    skin9_rect = skin9.get_rect(center=(170, 600))
+    #skin8_rect = skin8.get_rect(center=(920, 400))
+    skin9_rect = skin9.get_rect(center=(920, 400))
 
     while running:
 
@@ -570,8 +570,8 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
                     GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
                 if skin7_rect.collidepoint(event.pos):
                     GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
-                if skin8_rect.collidepoint(event.pos):
-                    GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
+                #if skin8_rect.collidepoint(event.pos):
+                 #   GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
                 if skin9_rect.collidepoint(event.pos):
                     GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
 
@@ -590,25 +590,26 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
                         GameVariables.COINS -= 2000
                         GameVariables.OWNED_SKINS.append("assets/glock5.png")
                         save_game()
+
                 if prize5_rect.collidepoint(event.pos):
                     if GameVariables.COINS >= 12000 and "assets/ak47_3.png" not in GameVariables.OWNED_SKINS:
                         GameVariables.COINS -= 12000
-                        GameVariables.OWNED_SKINS.append("assets/ak47_3.png")
+                        GameVariables.OWNED_SKINS.append("assets/ak47_2.png")
                         save_game()
                 if prize6_rect.collidepoint(event.pos):
                     if GameVariables.COINS >= 18000 and "assets/ak47_4.png" not in GameVariables.OWNED_SKINS:
                         GameVariables.COINS -= 18000
-                        GameVariables.OWNED_SKINS.append("assets/ak47_4.png")
+                        GameVariables.OWNED_SKINS.append("assets/ak47_3.png")
                         save_game()
-                if prize7_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 25000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
-                        GameVariables.COINS -= 25000
-                        GameVariables.OWNED_SKINS.append("assets/ak_flipped_transparent.png")
-                        save_game()
+                #if prize7_rect.collidepoint(event.pos):
+                 #   if GameVariables.COINS >= 25000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
+                  #      GameVariables.COINS -= 25000
+                    #    GameVariables.OWNED_SKINS.append("assets/ak_flipped_transparent.png")
+                   #     save_game()
                 if prize8_rect.collidepoint(event.pos):
-                    if GameVariables.COINS >= 30000 and "assets/ak_skin_flipped.png" not in GameVariables.OWNED_SKINS:
+                    if GameVariables.COINS >= 30000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
                         GameVariables.COINS -= 30000
-                        GameVariables.OWNED_SKINS.append("assets/ak_skin_flipped.png")
+                        GameVariables.OWNED_SKINS.append("assets/ak_flipped_transparent.png")
                         save_game()
 
         # coins_text im loop neu rendern damit er sich sofort aktualisiert
@@ -627,10 +628,10 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         prize1 = GameVariables.FONT_SMALL.render("500", True, prize_color(500, "assets/glock3.png"))
         prize2 = GameVariables.FONT_SMALL.render("1000", True, prize_color(1000, "assets/glock4.png"))
         prize3 = GameVariables.FONT_SMALL.render("2000", True, prize_color(2000, "assets/glock5.png"))
-        prize5 = GameVariables.FONT_SMALL.render("12000", True, prize_color(12000, "assets/ak47_3.png"))
-        prize6 = GameVariables.FONT_SMALL.render("18000", True, prize_color(18000, "assets/ak47_4.png"))
-        prize7 = GameVariables.FONT_SMALL.render("25000", True, prize_color(25000, "assets/ak_flipped_transparent.png"))
-        prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_skin_flipped.png"))
+        prize5 = GameVariables.FONT_SMALL.render("12000", True, prize_color(12000, "assets/ak47_2.png"))
+        prize6 = GameVariables.FONT_SMALL.render("18000", True, prize_color(18000, "assets/ak47_3.png"))
+        #prize7 = GameVariables.FONT_SMALL.render("25000", True, prize_color(25000, "assets/ak_flipped_transparent.png"))
+        prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_flipped_transparent.png.png"))
 
         screen.blit(skin1, skin1_rect)
         screen.blit(skin2, skin2_rect)
@@ -640,7 +641,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(skin5, skin5_rect)
         screen.blit(skin6, skin6_rect)
         screen.blit(skin7, skin7_rect)
-        screen.blit(skin8, skin8_rect)
+        #screen.blit(skin8, skin8_rect)
         screen.blit(skin9, skin9_rect)
 
         screen.blit(prize1, prize1_rect)
@@ -648,7 +649,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(prize3, prize3_rect)
         screen.blit(prize5, prize5_rect)
         screen.blit(prize6, prize6_rect)
-        screen.blit(prize7, prize7_rect)
+        #screen.blit(prize7, prize7_rect)
         screen.blit(prize8, prize8_rect)
         screen.blit(source=shop, dest=shop_rect)
         screen.blit(coins_text, coins_rect)
@@ -667,8 +668,8 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen, rect=(skin6_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak47_3.png":
             pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
-        if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
-            pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
+        #if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
+          #  pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
             pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
         pygame.display.flip()
