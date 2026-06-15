@@ -631,7 +631,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         prize5 = GameVariables.FONT_SMALL.render("12000", True, prize_color(12000, "assets/ak47_2.png"))
         prize6 = GameVariables.FONT_SMALL.render("18000", True, prize_color(18000, "assets/ak47_3.png"))
         #prize7 = GameVariables.FONT_SMALL.render("25000", True, prize_color(25000, "assets/ak_flipped_transparent.png"))
-        prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_flipped_transparent.png.png"))
+        prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_flipped_transparent.png"))
 
         screen.blit(skin1, skin1_rect)
         screen.blit(skin2, skin2_rect)

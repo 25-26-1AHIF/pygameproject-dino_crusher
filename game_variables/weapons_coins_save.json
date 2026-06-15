@@ -1,8 +1,13 @@
 {
-  "coins": 150.0,
+  "coins": 36985.0,
   "owned_skins": [
     "assets/glock2.png",
     "assets/ak47_1.png",
-    "assets/glock3.png"
+    "assets/ak47_2.png",
+    "assets/glock3.png",
+    "assets/ak47_3.png",
+    "assets/ak_flipped_transparent.png",
+    "assets/glock5.png",
+    "assets/glock4.png"
   ]
 }
