@@ -50,5 +50,6 @@ class GameScreens:
     DIFF_P = "difficulty_play"
     DIFF_H = "difficulty_highscore"
     SHOP = "shop"
+    KEY = "keybinds"
     actual_screen = MAIN
 

@@ -16,6 +16,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     inv_text = GameVariables.FONT_MIDDLE.render("Inventory", True, "gold")
     high_text = GameVariables.FONT_MIDDLE.render("Highscores", True, "darkblue")
     shop_text = GameVariables.FONT_MIDDLE.render("Shop", True, "silver")
+    key_text = GameVariables.FONT_MIDDLE.render("Keybinds", True, "pink")
 
     high_text_rect = high_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
     titel_text_rect = titel_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
@@ -24,6 +25,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
     settings_text_rect = settings_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
     inv_text_rect = inv_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
     shop_text_rect = shop_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 590))
+    key_text_rect = shop_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2 + 300, 400))
 
     background = pygame.image.load("assets/background.png").convert() #chatgpt für einzeigen von Hintergrund verwendet.
     running = True
@@ -50,6 +52,8 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
                     return GameScreens.DIFF_H
                 if shop_text_rect.collidepoint(event.pos):
                     return GameScreens.SHOP
+                if key_text_rect.collidepoint(event.pos):
+                    return GameScreens.KEY
 
         screen.blit(background, (0, 0))
         screen.blit(source=titel_text, dest=titel_text_rect)
@@ -59,6 +63,7 @@ def main_screen(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         screen.blit(source=inv_text, dest=inv_text_rect)
         screen.blit(source=high_text, dest=high_text_rect)
         screen.blit(source=shop_text, dest=shop_text_rect)
+        screen.blit(source=key_text, dest=key_text_rect)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
     pygame.quit()
@@ -510,7 +515,7 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     prize3_rect = prize3.get_rect(center=(950, 275))
     prize5_rect = prize5.get_rect(center=(420, 475))
     prize6_rect = prize6.get_rect(center=(670, 475))
-    #prize7_rect = prize7.get_rect(center=(920, 475))
+
     prize8_rect = prize8.get_rect(center=(920, 475))
     shop_rect = shop.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
     running = True
@@ -542,7 +547,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
     skin5_rect = skin5.get_rect(center=(170, 400))
     skin6_rect = skin6.get_rect(center=(420, 400))
     skin7_rect = skin7.get_rect(center=(670, 400))
-    #skin8_rect = skin8.get_rect(center=(920, 400))
     skin9_rect = skin9.get_rect(center=(920, 400))
 
     while running:
@@ -556,25 +560,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
                 if event.key == pygame.K_ESCAPE:
                     return GameScreens.MAIN
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #if skin1_rect.collidepoint(event.pos):
-                 #   GameVariables.PLAYER_SKIN = "assets/glock2.png"
-                #if skin2_rect.collidepoint(event.pos):
-                #    GameVariables.PLAYER_SKIN = "assets/glock3.png"
-                #if skin3_rect.collidepoint(event.pos):
-                #    GameVariables.PLAYER_SKIN = "assets/glock4.png"
-                #if skin4_rect.collidepoint(event.pos):
-                #    GameVariables.PLAYER_SKIN = "assets/glock5.png"
-                #if skin5_rect.collidepoint(event.pos):
-              #      GameVariables.PLAYER_SKIN_AK = "assets/ak47_1.png"
-               # if skin6_rect.collidepoint(event.pos):
-               #     GameVariables.PLAYER_SKIN_AK = "assets/ak47_2.png"
-               # if skin7_rect.collidepoint(event.pos):
-               #     GameVariables.PLAYER_SKIN_AK = "assets/ak47_3.png"
-                #if skin8_rect.collidepoint(event.pos):
-                 #   GameVariables.PLAYER_SKIN_AK = "assets/ak47_4.png"
-               # if skin9_rect.collidepoint(event.pos):
-                #    GameVariables.PLAYER_SKIN_AK = "assets/ak_flipped_transparent.png"
-
                 if prize1_rect.collidepoint(event.pos):
                     if GameVariables.COINS >= 500 and "assets/glock3.png" not in GameVariables.OWNED_SKINS:
                         GameVariables.COINS -= 500
@@ -601,11 +586,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
                         GameVariables.COINS -= 18000
                         GameVariables.OWNED_SKINS.append("assets/ak47_3.png")
                         save_game()
-                #if prize7_rect.collidepoint(event.pos):
-                 #   if GameVariables.COINS >= 25000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
-                  #      GameVariables.COINS -= 25000
-                    #    GameVariables.OWNED_SKINS.append("assets/ak_flipped_transparent.png")
-                   #     save_game()
                 if prize8_rect.collidepoint(event.pos):
                     if GameVariables.COINS >= 30000 and "assets/ak_flipped_transparent.png" not in GameVariables.OWNED_SKINS:
                         GameVariables.COINS -= 30000
@@ -630,7 +610,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         prize3 = GameVariables.FONT_SMALL.render("2000", True, prize_color(2000, "assets/glock5.png"))
         prize5 = GameVariables.FONT_SMALL.render("12000", True, prize_color(12000, "assets/ak47_2.png"))
         prize6 = GameVariables.FONT_SMALL.render("18000", True, prize_color(18000, "assets/ak47_3.png"))
-        #prize7 = GameVariables.FONT_SMALL.render("25000", True, prize_color(25000, "assets/ak_flipped_transparent.png"))
         prize8 = GameVariables.FONT_SMALL.render("30000", True, prize_color(30000, "assets/ak_flipped_transparent.png"))
 
         screen.blit(skin1, skin1_rect)
@@ -641,7 +620,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(skin5, skin5_rect)
         screen.blit(skin6, skin6_rect)
         screen.blit(skin7, skin7_rect)
-        #screen.blit(skin8, skin8_rect)
         screen.blit(skin9, skin9_rect)
 
         screen.blit(prize1, prize1_rect)
@@ -649,7 +627,6 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
         screen.blit(prize3, prize3_rect)
         screen.blit(prize5, prize5_rect)
         screen.blit(prize6, prize6_rect)
-        #screen.blit(prize7, prize7_rect)
         screen.blit(prize8, prize8_rect)
         screen.blit(source=shop, dest=shop_rect)
         screen.blit(coins_text, coins_rect)
@@ -668,12 +645,57 @@ def shop(screen: pygame.Surface, clock: pygame.time.Clock):
             pygame.draw.rect(surface=screen, rect=(skin6_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak47_3.png":
             pygame.draw.rect(surface=screen,rect=(skin7_rect.inflate(20, 10)), color="white", width=3)
-        #if GameVariables.PLAYER_SKIN_AK == "assets/ak47_4.png":
-          #  pygame.draw.rect(surface=screen,rect=(skin8_rect.inflate(20, 10)), color="white", width=3)
         if GameVariables.PLAYER_SKIN_AK == "assets/ak_flipped_transparent.png":
             pygame.draw.rect(surface=screen,rect=(skin9_rect.inflate(20, 10)), color="white", width=3)
         pygame.display.flip()
         clock.tick(GameVariables.FPS)
+
+
+
+
+
+def keybinds(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
+    keybinds = GameVariables.FONT_BIG.render("Keybinds", True, "pink")
+    key_a_text = GameVariables.FONT_MIDDLE.render("<-: a", True, "white")
+    key_d_text = GameVariables.FONT_MIDDLE.render("->: d", True, "white")
+    key_space_text = GameVariables.FONT_MIDDLE.render("jump: space", True, "white")
+    key_mouse_text = GameVariables.FONT_MIDDLE.render("shoot: mouse", True, "white")
+    key_back_text = GameVariables.FONT_MIDDLE.render("go back (screen): esc", True, "white")
+    settings_screen = pygame.image.load(
+        "assets/background.png").convert()
+
+    keybinds_rect = keybinds.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 100))
+    key_a_rect = key_a_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200))
+    key_d_rect = key_d_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 300))
+    key_space_rect = key_space_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+    key_mouse_rect = key_mouse_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 500))
+    key_back_rect = key_back_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 600))
+
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return GameScreens.EXIT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameScreens.MAIN
+
+
+        screen.blit(settings_screen, (0, 0))
+
+
+        screen.blit(key_a_text, key_a_rect)
+        screen.blit(key_d_text, key_d_rect)
+        screen.blit(key_space_text, key_space_rect)
+        screen.blit(key_mouse_text, key_mouse_rect)
+        screen.blit(key_back_text, key_back_rect)
+        screen.blit(source=keybinds, dest=keybinds_rect)
+        pygame.display.flip()
+        clock.tick(GameVariables.FPS)
+
+
+
 
 
 def main():
@@ -733,6 +755,8 @@ def main():
             GameScreens.actual_screen = difficulty_high(screen, clock)
         elif GameScreens.actual_screen == GameScreens.SHOP:
             GameScreens.actual_screen = shop(screen, clock)
+        elif GameScreens.actual_screen == GameScreens.KEY:
+            GameScreens.actual_screen = keybinds(screen, clock)
 
     pygame.quit()
 
