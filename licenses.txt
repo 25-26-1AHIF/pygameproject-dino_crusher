@@ -1,0 +1,27 @@
+# Lizenzen
+
+## Bilder / Sprites
+
+- Velociraptor Spritesheet von pixramen:
+    - Link: https://pixramen.itch.io/2d-dino-character-velociraptor
+    - License: Free to use/edit in commercial projects. Credit nicht
+      verpflichtend, aber erwünscht. Weiterverkauf nicht erlaubt.
+
+- Pterodactyl / Flug-Dino von Myaumya:
+    - Link: https://myaumya.itch.io/dinosaur-sprites
+    - License: Free für kommerzielle & nicht-kommerzielle Projekte.
+      Änderungen erlaubt. Weiterverkauf/Weitergabe nicht erlaubt,
+      darf nicht als eigenes Asset ausgegeben werden.
+
+- Gun-Sprites (Glock, AK47) von Deymoon:
+    - Link: https://deymoon.itch.io/guns
+    - License: Free to use. Weiterverkauf/Weitergabe (auch modifiziert)
+      nicht erlaubt.
+
+## Musik
+
+- Jim Yosef & Anna Yvette - Linked:
+    - Link: https://ncs.io/2017LinkedNS
+    - License: NCS Release - kostenlos nutzbar, auch monetarisiert,
+      ohne Copyright-Probleme. Credit-Pflicht:
+      "Music provided by NoCopyrightSounds."

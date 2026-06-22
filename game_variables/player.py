@@ -1,5 +1,3 @@
-import time
-
 import pygame
 import math
 from game_variables.missle import Missle

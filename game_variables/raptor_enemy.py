@@ -2,10 +2,7 @@ import random
 
 import pygame
 from game_variables.sprites import Sprite as SpriteSheet
-from game_variables.player import Player
 from game_variables.game_variables import GameVariables
-import time
-from game_variables.missle import Missle
 from game_variables.missle import Missles
 
 
