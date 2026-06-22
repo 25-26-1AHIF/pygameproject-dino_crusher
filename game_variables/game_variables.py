@@ -29,6 +29,7 @@ class GameVariables:
     MAX_BULLETS = 30
     TOLERANCE = 15
     COLOR = "none"
+    NAME = "unidentified"
     @staticmethod
     def init():
         pygame.init()

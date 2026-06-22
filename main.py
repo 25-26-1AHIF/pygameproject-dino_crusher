@@ -209,25 +209,48 @@ def settings(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
         clock.tick(GameVariables.FPS)
 
 def dead_screen(screen: pygame.Surface, clock: pygame.time.Clock, points):
-    died_text = GameVariables.FONT_BIG.render("You died", True, "darkred")
-    points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points}", True, "darkred")
-    died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
-    points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
+        died_text = GameVariables.FONT_BIG.render("You died", True, "darkred")
+        points_text = GameVariables.FONT_MIDDLE.render(f"Points: {points}", True, "darkred")
+        died_text_rect = died_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 250))
+        points_text_rect = points_text.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 400))
 
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return GameScreens.EXIT
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    return GameScreens.MAIN
+        GameVariables.NAME = ""
 
-        screen.fill("black")
-        screen.blit(source=died_text, dest=died_text_rect)
-        screen.blit(source=points_text, dest=points_text_rect)
-        pygame.display.flip()
-        clock.tick(GameVariables.FPS)
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return GameScreens.EXIT
+
+                if event.type == pygame.KEYDOWN:                                    # eingabe von namen mit chatgpt gemacht
+                    if event.key == pygame.K_ESCAPE:
+                        return GameScreens.MAIN
+
+                    elif event.key == pygame.K_RETURN:
+                        GameVariables.NAME = GameVariables.NAME
+                        return GameScreens.MAIN
+
+                    elif event.key == pygame.K_BACKSPACE:
+                        GameVariables.NAME = GameVariables.NAME[:-1]
+
+                    else:
+                        GameVariables.NAME += event.unicode
+
+            screen.fill("black")
+
+            name_text = GameVariables.FONT_MIDDLE.render(
+                f"Name: {GameVariables.NAME}", True, "white"
+            )
+            name_text_rect = name_text.get_rect(
+                center=(GameVariables.SCREEN_WIDTH // 2, 550)
+            )
+
+            screen.blit(source=died_text, dest=died_text_rect)
+            screen.blit(source=points_text, dest=points_text_rect)
+            screen.blit(source=name_text, dest=name_text_rect)
+
+            pygame.display.flip()
+            clock.tick(GameVariables.FPS)
 
 
 
@@ -370,7 +393,7 @@ def highscore(screen: pygame.Surface, clock: pygame.time.Clock):
                     stoppen = False
 
         for idx, hs in enumerate(highscores[:5]):
-            highs = GameVariables.FONT_MIDDLE.render(f"{idx+1}.             {hs}", True, f"{GameVariables.COLOR}")
+            highs = GameVariables.FONT_MIDDLE.render(f"{idx+1}.             {hs[0]} ({hs[1]})", True, f"{GameVariables.COLOR}")
             highs_rect = highs.get_rect(center=(GameVariables.SCREEN_WIDTH // 2, 200 + idx*100))
             screen.blit(source=highs, dest=highs_rect)
 
@@ -725,10 +748,14 @@ def main():
         elif GameScreens.actual_screen == GameScreens.EXIT:
             break
         elif GameScreens.actual_screen == GameScreens.DEAD:
+            #name = "Lukas"
+
+
+            GameScreens.actual_screen = dead_screen(screen, clock, GameVariables.POINTS)
             if not GameVariables.SAVED:
                 with open(f"game_variables/{GameVariables.DIFFICULTY_PFAD}", "r") as fp:
                     inhalt = json.load(fp)
-                    inhalt.append(GameVariables.POINTS)
+                    inhalt.append([GameVariables.POINTS, GameVariables.NAME])
                 with open(f"game_variables/{GameVariables.DIFFICULTY_PFAD}", "w") as fp:
                     json.dump(inhalt, fp, indent=2)
                 if GameVariables.DIFFICULTY_P == "easy":
@@ -741,8 +768,6 @@ def main():
                     GameVariables.COINS += GameVariables.POINTS*2
                 save_game()
                 GameVariables.SAVED = True
-
-            GameScreens.actual_screen = dead_screen(screen, clock, GameVariables.POINTS)
             GameVariables.MISSLE_COUNT = 0
             GameVariables.SAVED = False
         elif GameScreens.actual_screen == GameScreens.INV:
